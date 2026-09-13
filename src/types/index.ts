@@ -101,6 +101,7 @@ export interface DailyLog {
   dateStr: string; // YYYY-MM-DD
   dayNumber: number; // 1 to 60
   workoutCompleted: boolean;
+  stretchingCompleted?: boolean;
   nutritionTargetMet: boolean;
   cardioCompleted?: boolean; // Cumplimiento de regla de cardio según perfil (Anti-catabolismo Tomás / Quema & Colesterol Miranda)
   caloriesConsumed: number;

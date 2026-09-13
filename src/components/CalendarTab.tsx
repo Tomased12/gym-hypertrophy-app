@@ -74,6 +74,7 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
       dateStr,
       dayNumber: selectedDayToEdit.dayNum,
       workoutCompleted: false,
+      stretchingCompleted: false,
       nutritionTargetMet: false,
       cardioCompleted: false,
       caloriesConsumed: 0,

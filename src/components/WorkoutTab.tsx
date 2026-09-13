@@ -13,19 +13,23 @@ import {
   Coffee,
   Sparkles,
   Video,
-  Heart
+  Heart,
+  HeartHandshake
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import type { DayRoutine, UserId } from '../types';
 import { getRoutineForUser } from '../lib/workoutPlan';
 import { playBeep } from '../lib/sound';
 import { ExerciseVisualViewer } from './ExerciseVisualViewer';
+import { GuidedStretchingWidget } from './GuidedStretchingWidget';
 
 interface WorkoutTabProps {
   userId?: UserId;
   currentCycleDay: number;
   isWorkoutCompletedToday: boolean;
+  isStretchingCompletedToday?: boolean;
   onToggleWorkoutCompleted: (completed: boolean) => void;
+  onToggleStretchingCompleted?: (completed: boolean) => void;
   onStartRestTimer: (seconds: number, exerciseName: string) => void;
 }
 
@@ -33,12 +37,15 @@ export const WorkoutTab: React.FC<WorkoutTabProps> = ({
   userId = 'tomas',
   currentCycleDay,
   isWorkoutCompletedToday,
+  isStretchingCompletedToday = false,
   onToggleWorkoutCompleted,
+  onToggleStretchingCompleted,
   onStartRestTimer
 }) => {
   const [selectedDay, setSelectedDay] = useState<number>(currentCycleDay);
   const [completedSets, setCompletedSets] = useState<Record<string, boolean[]>>({});
   const [expandedExerciseId, setExpandedExerciseId] = useState<string | null>(null);
+  const [highlightCooldown, setHighlightCooldown] = useState(false);
 
   const isMiranda = userId === 'miranda';
   const routine: DayRoutine = getRoutineForUser(userId, selectedDay);
@@ -59,10 +66,41 @@ export const WorkoutTab: React.FC<WorkoutTabProps> = ({
     if (updated[setIndex]) {
       playBeep('tick');
       onStartRestTimer(restSec, exName);
+
+      // Check if this was the last set of the last exercise
+      const exercises = routine.exercises || [];
+      const lastEx = exercises[exercises.length - 1];
+      const isLastEx = lastEx && lastEx.id === exerciseId;
+      const isLastSet = setIndex === totalSets - 1;
+
+      if (isLastEx && isLastSet) {
+        setHighlightCooldown(true);
+        setTimeout(() => {
+          const el = document.getElementById('guided-stretching-section');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+      }
+    }
+  };
+
+  const handleConfirmStretching = () => {
+    if (onToggleStretchingCompleted) {
+      onToggleStretchingCompleted(true);
+    }
+    if (!isWorkoutCompletedToday) {
+      onToggleWorkoutCompleted(true);
     }
   };
 
   const handleFinishRoutine = () => {
+    if (!routine.isRestDay && !isStretchingCompletedToday) {
+      setHighlightCooldown(true);
+      const el = document.getElementById('guided-stretching-section');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      playBeep('tick');
+      return;
+    }
+
     onToggleWorkoutCompleted(!isWorkoutCompletedToday);
     if (!isWorkoutCompletedToday) {
       playBeep('success');
@@ -192,15 +230,22 @@ export const WorkoutTab: React.FC<WorkoutTabProps> = ({
                 className={`py-3 px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-lg ${
                   isWorkoutCompletedToday
                     ? 'bg-emerald-500 text-black shadow-emerald-500/20 hover:bg-emerald-400'
-                    : isMiranda
-                      ? 'bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-black shadow-emerald-500/20 hover:scale-[1.02]'
-                      : 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black shadow-amber-500/20 hover:scale-[1.02]'
+                    : !routine.isRestDay && !isStretchingCompletedToday
+                      ? 'bg-dark-900/90 text-amber-300 border border-amber-500/40 hover:bg-dark-850 shadow-md'
+                      : isMiranda
+                        ? 'bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-black shadow-emerald-500/20 hover:scale-[1.02]'
+                        : 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black shadow-amber-500/20 hover:scale-[1.02]'
                 }`}
               >
                 {isWorkoutCompletedToday ? (
                   <>
                     <CheckCircle2 className="w-5 h-5 text-black" />
                     ¡Rutina de Hoy Completada!
+                  </>
+                ) : !routine.isRestDay && !isStretchingCompletedToday ? (
+                  <>
+                    <HeartHandshake className="w-5 h-5 text-amber-400 animate-pulse" />
+                    Falta Elongación Anti-Dolor
                   </>
                 ) : (
                   <>
@@ -398,6 +443,14 @@ export const WorkoutTab: React.FC<WorkoutTabProps> = ({
               );
             })}
           </div>
+
+          {/* Módulo Interactivo de Recuperación y Estiramientos Guiados (Anti-Dolor) */}
+          <GuidedStretchingWidget
+            userId={userId}
+            isStretchingCompleted={!!isStretchingCompletedToday}
+            onConfirmCompleted={handleConfirmStretching}
+            highlightCard={highlightCooldown}
+          />
         </div>
       )}
     </div>

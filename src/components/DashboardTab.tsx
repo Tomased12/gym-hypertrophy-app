@@ -228,8 +228,13 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
               <p className="text-sm font-bold text-white">
                 {routine.isRestDay ? '¿Cumpliste descanso/caminata?' : '¿Completaste la rutina de hoy?'}
               </p>
-              <p className="text-xs text-slate-400 mt-1">
-                {routine.isRestDay ? 'Regeneración muscular' : `${routine.exercises.length} ejercicios con mancuernas/silla`}
+              <p className="text-xs text-slate-400 mt-1 flex items-center gap-1.5 flex-wrap">
+                <span>{routine.isRestDay ? 'Regeneración muscular' : `${routine.exercises.length} ejercicios + Elongación Anti-Dolor`}</span>
+                {!routine.isRestDay && todayLog.stretchingCompleted && (
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-teal-500/20 text-teal-300 font-bold border border-teal-500/30">
+                    ✓ Estiramientos listos
+                  </span>
+                )}
               </p>
             </div>
 

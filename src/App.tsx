@@ -279,7 +279,9 @@ export function App() {
             userId={profile.id}
             currentCycleDay={profile.currentDay}
             isWorkoutCompletedToday={todayLog.workoutCompleted}
+            isStretchingCompletedToday={todayLog.stretchingCompleted}
             onToggleWorkoutCompleted={(completed) => handleUpdateTodayLog({ workoutCompleted: completed })}
+            onToggleStretchingCompleted={(completed) => handleUpdateTodayLog({ stretchingCompleted: completed })}
             onStartRestTimer={handleStartRestTimer}
           />
         )}
