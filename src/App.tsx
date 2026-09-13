@@ -232,7 +232,7 @@ export function App() {
 
     const hasWorkout = !!log?.workoutCompleted;
     const hasNutrition = !!log?.nutritionTargetMet;
-    const hasCardio = !!log?.cardioCompleted;
+    const hasCardio = !!log?.cardioCompleted || (profile.id === 'miranda' && (log?.stepsCount || 0) >= (profile.targetSteps || 8000));
 
     if (routine.isRestDay) {
       if (hasNutrition && hasCardio) successfulDays++;

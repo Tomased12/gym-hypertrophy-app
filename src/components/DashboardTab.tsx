@@ -362,7 +362,10 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
           <StepCounterWidget
             currentSteps={todayLog.stepsCount || 0}
             targetSteps={profile.targetSteps || 8000}
-            onUpdateSteps={(steps) => onUpdateTodayLog({ stepsCount: steps })}
+            onUpdateSteps={(steps) => onUpdateTodayLog({ 
+              stepsCount: steps,
+              cardioCompleted: steps >= (profile.targetSteps || 8000) ? true : todayLog.cardioCompleted
+            })}
           />
         </div>
       ) : (

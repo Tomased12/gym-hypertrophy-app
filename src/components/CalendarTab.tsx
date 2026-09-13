@@ -42,7 +42,7 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
 
     const hasWorkout = !!log?.workoutCompleted;
     const hasNutrition = !!log?.nutritionTargetMet;
-    const hasCardio = !!log?.cardioCompleted;
+    const hasCardio = !!log?.cardioCompleted || (isMiranda && (log?.stepsCount || 0) >= 8000);
 
     if (routine.isRestDay) {
       if (hasNutrition && hasCardio) {
@@ -184,7 +184,7 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
                       statusDot = 'bg-slate-800';
                     } else if (routine.isRestDay) {
                       const hasNutrition = !!log?.nutritionTargetMet;
-                      const hasCardio = !!log?.cardioCompleted;
+                      const hasCardio = !!log?.cardioCompleted || (isMiranda && (log?.stepsCount || 0) >= 8000);
                       if (hasNutrition && hasCardio) {
                         statusBg = 'bg-emerald-950/40 border-emerald-500/40 text-emerald-300';
                         statusDot = 'bg-emerald-400';
@@ -196,7 +196,8 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
                         statusDot = 'bg-red-500';
                       }
                     } else {
-                      const done = (log?.workoutCompleted ? 1 : 0) + (log?.nutritionTargetMet ? 1 : 0) + (log?.cardioCompleted ? 1 : 0);
+                      const hasCardioActive = !!log?.cardioCompleted || (isMiranda && (log?.stepsCount || 0) >= 8000);
+                      const done = (log?.workoutCompleted ? 1 : 0) + (log?.nutritionTargetMet ? 1 : 0) + (hasCardioActive ? 1 : 0);
                       if (done === 3) {
                         statusBg = 'bg-emerald-950/50 border-emerald-500/50 text-emerald-200 shadow-sm shadow-emerald-500/20';
                         statusDot = 'bg-emerald-400';
@@ -298,7 +299,7 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
                     {isMiranda ? '¿Cumpliste déficit y proteínas?' : '¿Cumpliste superávit y proteínas?'}
                   </span>
                   <span className="text-[11px] text-slate-400">
-                    {isMiranda ? '1.425 kcal y 100g proteína' : '2.650 kcal y 140-150g proteína anabólica'}
+                    {isMiranda ? '1.350 - 1.400 kcal (alto TEF) y 100g proteína' : '2.650 kcal y 140-150g proteína anabólica'}
                   </span>
                 </div>
                 <button
@@ -321,7 +322,7 @@ export const CalendarTab: React.FC<CalendarTabProps> = ({
                   </span>
                   <span className="text-[11px] text-slate-400">
                     {isMiranda 
-                      ? '30-45 min de cardio o 6.000-8.000 pasos'
+                      ? '30-45 min de caminata o meta NEAT de 8.000 pasos'
                       : 'Evitaste cardio excesivo (máx 15-20 min suaves)'}
                   </span>
                 </div>
