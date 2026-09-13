@@ -46,8 +46,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   const activeColor = isMiranda ? 'text-emerald-400' : 'text-amber-400';
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-dark-950/85 backdrop-blur-md">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <>
+      <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-dark-950/90 backdrop-blur-md pt-[env(safe-area-inset-top,0px)]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 gap-2 sm:gap-4">
           {/* Logo / Brand */}
           <div 
@@ -202,68 +203,72 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* Dedicated Mobile Profile Switcher Bar (Full Width, Large Touch Targets for iPhone) */}
-      <div className="sm:hidden px-3 py-1.5 bg-dark-950/95 border-t border-white/5">
+      <div className="sm:hidden px-3 py-2 bg-dark-950 border-t border-white/5">
         <ProfileSwitcher 
           activeUserId={activeUserId} 
           onSwitchUser={onSwitchUser} 
           fullWidth={true}
         />
       </div>
-
-      {/* Mobile Bottom Navigation Bar with iOS Safe-Area Padding */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-dark-950/95 backdrop-blur-lg border-t border-white/10 px-2 pt-1 pb-[max(0.6rem,env(safe-area-inset-bottom))]">
-        <div className="flex items-center justify-around">
-          <button
-            onClick={() => onSelectTab('dashboard')}
-            className={`flex flex-col items-center justify-center py-1.5 px-2 rounded-lg transition-colors ${
-              currentTab === 'dashboard' ? activeColor : 'text-slate-400'
-            }`}
-          >
-            <Activity className="w-5 h-5" />
-            <span className="text-[10px] font-medium mt-1">Inicio</span>
-          </button>
-
-          <button
-            onClick={() => onSelectTab('workout')}
-            className={`flex flex-col items-center justify-center py-1.5 px-2 rounded-lg transition-colors ${
-              currentTab === 'workout' ? activeColor : 'text-slate-400'
-            }`}
-          >
-            <Dumbbell className="w-5 h-5" />
-            <span className="text-[10px] font-medium mt-1">Rutina</span>
-          </button>
-
-          <button
-            onClick={() => onSelectTab('nutrition')}
-            className={`flex flex-col items-center justify-center py-1.5 px-2 rounded-lg transition-colors ${
-              currentTab === 'nutrition' ? activeColor : 'text-slate-400'
-            }`}
-          >
-            <Utensils className="w-5 h-5" />
-            <span className="text-[10px] font-medium mt-1">Comidas</span>
-          </button>
-
-          <button
-            onClick={() => onSelectTab('calendar')}
-            className={`flex flex-col items-center justify-center py-1.5 px-2 rounded-lg transition-colors ${
-              currentTab === 'calendar' ? activeColor : 'text-slate-400'
-            }`}
-          >
-            <Calendar className="w-5 h-5" />
-            <span className="text-[10px] font-medium mt-1">60 Días</span>
-          </button>
-
-          <button
-            onClick={() => onSelectTab('progress')}
-            className={`flex flex-col items-center justify-center py-1.5 px-2 rounded-lg transition-colors ${
-              currentTab === 'progress' ? activeColor : 'text-slate-400'
-            }`}
-          >
-            <TrendingUp className="w-5 h-5" />
-            <span className="text-[10px] font-medium mt-1">Medidas</span>
-          </button>
-        </div>
-      </div>
     </header>
+
+    {/* Mobile Bottom Navigation Bar with iOS Safe-Area Padding - Placed OUTSIDE header to avoid backdrop-blur containing block bug */}
+    <nav 
+      aria-label="Navegación móvil inferior" 
+      className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-dark-950/95 backdrop-blur-lg border-t border-white/10 px-2 pt-1.5 pb-[max(0.75rem,env(safe-area-inset-bottom,0px))]"
+    >
+      <div className="flex items-center justify-around">
+        <button
+          onClick={() => onSelectTab('dashboard')}
+          className={`flex flex-col items-center justify-center py-1.5 px-2 rounded-lg transition-colors ${
+            currentTab === 'dashboard' ? activeColor : 'text-slate-400'
+          }`}
+        >
+          <Activity className="w-5 h-5" />
+          <span className="text-[10px] font-medium mt-1">Inicio</span>
+        </button>
+
+        <button
+          onClick={() => onSelectTab('workout')}
+          className={`flex flex-col items-center justify-center py-1.5 px-2 rounded-lg transition-colors ${
+            currentTab === 'workout' ? activeColor : 'text-slate-400'
+          }`}
+        >
+          <Dumbbell className="w-5 h-5" />
+          <span className="text-[10px] font-medium mt-1">Rutina</span>
+        </button>
+
+        <button
+          onClick={() => onSelectTab('nutrition')}
+          className={`flex flex-col items-center justify-center py-1.5 px-2 rounded-lg transition-colors ${
+            currentTab === 'nutrition' ? activeColor : 'text-slate-400'
+          }`}
+        >
+          <Utensils className="w-5 h-5" />
+          <span className="text-[10px] font-medium mt-1">Comidas</span>
+        </button>
+
+        <button
+          onClick={() => onSelectTab('calendar')}
+          className={`flex flex-col items-center justify-center py-1.5 px-2 rounded-lg transition-colors ${
+            currentTab === 'calendar' ? activeColor : 'text-slate-400'
+          }`}
+        >
+          <Calendar className="w-5 h-5" />
+          <span className="text-[10px] font-medium mt-1">60 Días</span>
+        </button>
+
+        <button
+          onClick={() => onSelectTab('progress')}
+          className={`flex flex-col items-center justify-center py-1.5 px-2 rounded-lg transition-colors ${
+            currentTab === 'progress' ? activeColor : 'text-slate-400'
+          }`}
+        >
+          <TrendingUp className="w-5 h-5" />
+          <span className="text-[10px] font-medium mt-1">Medidas</span>
+        </button>
+      </div>
+    </nav>
+  </>
   );
 };

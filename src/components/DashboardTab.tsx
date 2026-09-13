@@ -14,7 +14,7 @@ import {
   Footprints,
   Sparkles
 } from 'lucide-react';
-import type { UserProfile, DailyLog, BodyMeasurement } from '../types';
+import type { UserProfile, DailyLog, BodyMeasurement, UserId } from '../types';
 import { getRoutineForUser } from '../lib/workoutPlan';
 import type { TabType } from './Navbar';
 import { playBeep } from '../lib/sound';
@@ -31,6 +31,7 @@ interface DashboardTabProps {
   onUpdateTodayLog: (updates: Partial<DailyLog>) => void;
   onOpenCardioModal: () => void;
   consistencyRate: number;
+  onSwitchUser?: (userId: UserId) => void;
 }
 
 export const DashboardTab: React.FC<DashboardTabProps> = ({
@@ -40,7 +41,8 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
   onNavigateTab,
   onUpdateTodayLog,
   onOpenCardioModal,
-  consistencyRate
+  consistencyRate,
+  onSwitchUser
 }) => {
   const currentDay = profile.currentDay;
   const daysRemaining = 60 - currentDay;
@@ -117,6 +119,38 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
               <p className="text-sm text-slate-300 mt-2 max-w-xl leading-relaxed">
                 Prioridad: <strong>Grosor en brazos (60% tríceps, bíceps & braquial)</strong> con mancuernas de 6 kg (Tempo 3-1-1-0 de 15-25 reps), silla y colchoneta. Perfil: <span className="text-amber-300 font-bold">70 kg (1.79 m)</span> • Meta fija: <span className="text-emerald-300 font-bold">2.650 kcal / 140-150g prote</span>.
               </p>
+            )}
+
+            {/* In-Card Quick Profile Switcher (Guaranteed visible and easy to tap) */}
+            {onSwitchUser && (
+              <div className="mt-4 inline-flex items-center gap-2 p-1.5 rounded-2xl bg-dark-950/90 border border-white/15 shadow-xl w-full max-w-xs">
+                <button
+                  type="button"
+                  onClick={() => onSwitchUser('tomas')}
+                  className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all touch-manipulation cursor-pointer ${
+                    !isMiranda
+                      ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-black font-extrabold shadow-md shadow-amber-500/30 scale-[1.02]'
+                      : 'text-slate-300 hover:text-white hover:bg-dark-800 active:scale-95'
+                  }`}
+                >
+                  <Dumbbell className="w-3.5 h-3.5" />
+                  <span>Tomás</span>
+                  {!isMiranda && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onSwitchUser('miranda')}
+                  className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all touch-manipulation cursor-pointer ${
+                    isMiranda
+                      ? 'bg-gradient-to-r from-emerald-400 to-teal-500 text-black font-extrabold shadow-md shadow-emerald-500/30 scale-[1.02]'
+                      : 'text-slate-300 hover:text-white hover:bg-dark-800 active:scale-95'
+                  }`}
+                >
+                  <Heart className="w-3.5 h-3.5" />
+                  <span>Miranda</span>
+                  {isMiranda && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                </button>
+              </div>
             )}
           </div>
 

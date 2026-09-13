@@ -260,8 +260,8 @@ export function App() {
         onResetRequest={() => setIsResetModalOpen(true)}
       />
 
-      {/* Main Container */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 pt-6">
+      {/* Main Container with bottom padding for mobile navbar */}
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 pt-4 pb-28 sm:pb-12">
         {currentTab === 'dashboard' && (
           <DashboardTab
             profile={profile}
@@ -271,6 +271,7 @@ export function App() {
             onUpdateTodayLog={handleUpdateTodayLog}
             onOpenCardioModal={() => setIsCardioModalOpen(true)}
             consistencyRate={consistencyRate}
+            onSwitchUser={handleSwitchUser}
           />
         )}
 
