@@ -66,7 +66,9 @@ export const NutritionTab: React.FC<NutritionTabProps> = ({
   const debounceTimerRef = useRef<any>(null);
 
   const isMiranda = profile.id === 'miranda';
-  const targetCalories = profile.targetCalories || profile.targetSurplusCalories || (isMiranda ? 1425 : 2650);
+  const targetCalories = isMiranda 
+    ? (profile.targetCalories === 1425 ? 1380 : (profile.targetCalories || 1380))
+    : (profile.targetCalories || profile.targetSurplusCalories || 2650);
   const targetProtein = profile.targetProteinGrams || (isMiranda ? 100 : 145);
 
   // Local instant preview
@@ -241,13 +243,13 @@ export const NutritionTab: React.FC<NutritionTabProps> = ({
           </div>
 
           <div className="flex items-center gap-3">
-            <div className={`p-3 rounded-xl border text-center min-w-[120px] ${
+            <div className={`p-3 rounded-xl border text-center min-w-[130px] ${
               isMiranda 
                 ? (totalCalories <= targetCalories ? 'bg-emerald-950/40 border-emerald-500/40' : 'bg-red-950/40 border-red-500/40')
                 : (totalCalories >= targetCalories ? 'bg-emerald-950/40 border-emerald-500/40' : 'bg-dark-950 border-white/10')
             }`}>
               <span className="text-[10px] uppercase font-bold text-slate-400 block">
-                {isMiranda ? 'Presupuesto Calórico' : 'Superávit'}
+                {isMiranda ? 'Meta 1.350-1.400 kcal' : 'Superávit'}
               </span>
               <span className={`text-xl font-heading font-black ${
                 isMiranda 
@@ -256,19 +258,19 @@ export const NutritionTab: React.FC<NutritionTabProps> = ({
               }`}>
                 {totalCalories} <span className="text-xs font-normal text-slate-400">/ {targetCalories}</span>
               </span>
-              <span className="text-[10px] text-slate-400 block font-mono">kcal</span>
+              <span className="text-[10px] text-slate-400 block font-mono">{isMiranda ? 'kcal (Déficit Sostenible)' : 'kcal'}</span>
             </div>
 
-            <div className={`p-3 rounded-xl border text-center min-w-[120px] ${
+            <div className={`p-3 rounded-xl border text-center min-w-[130px] ${
               isProteinReached ? 'bg-emerald-950/40 border-emerald-500/40' : 'bg-dark-950 border-white/10'
             }`}>
               <span className="text-[10px] uppercase font-bold text-slate-400 block">
-                {isMiranda ? 'Proteína (1.6g/kg)' : 'Proteína (2g/kg)'}
+                {isMiranda ? 'Proteína TEF (Mín. 100g)' : 'Proteína (2g/kg)'}
               </span>
               <span className={`text-xl font-heading font-black ${isProteinReached ? 'text-emerald-400' : 'text-cyan-400'}`}>
                 {totalProtein} <span className="text-xs font-normal text-slate-400">/ {targetProtein}</span>
               </span>
-              <span className="text-[10px] text-slate-400 block font-mono">gramos</span>
+              <span className="text-[10px] text-slate-400 block font-mono">{isMiranda ? 'gramos (Efecto Térmico)' : 'gramos'}</span>
             </div>
           </div>
         </div>
@@ -418,6 +420,23 @@ export const NutritionTab: React.FC<NutritionTabProps> = ({
             </button>
           ))}
         </div>
+
+        {/* Regla Metabólica de Orden de Ingesta para Miranda */}
+        {isMiranda && (
+          <div className="mb-4 p-3.5 rounded-2xl bg-gradient-to-r from-emerald-950/50 via-dark-900 to-teal-950/40 border border-emerald-500/30 flex items-start gap-3 text-xs text-slate-200 shadow-sm">
+            <div className="w-7 h-7 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0 mt-0.5">
+              <Sparkles className="w-4 h-4" />
+            </div>
+            <div>
+              <span className="font-bold text-emerald-300 block text-[13px] mb-0.5">
+                💡 Regla Metabólica: Orden de Ingesta Estratégico
+              </span>
+              <p className="text-slate-300 leading-relaxed">
+                <strong>Priorizar orden de ingesta: vegetales/fibra primero, luego proteína y al final carbohidratos complejos</strong> para aplanar picos de glucosa y evitar almacenamiento graso abdominal.
+              </p>
+            </div>
+          </div>
+        )}
 
         <form onSubmit={handleAddMeal} className="space-y-4">
           {/* Avocado Alert if typed for Miranda */}

@@ -111,7 +111,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
 
             {isMiranda ? (
               <p className="text-sm text-slate-300 mt-2 max-w-xl leading-relaxed">
-                Meta: <strong>62 kg ➔ 55 kg (-7 kg)</strong> con tonificación en casa (Silla + Colchoneta + Mancuernas 6 kg). Perfil: <span className="text-emerald-300 font-bold">1.55 m • 27 años</span> • Nutrición: <span className="text-teal-300 font-bold">1.425 kcal / 100g proteína</span> • <span className="text-red-300 font-bold">Cero palta</span> • 6.000 a 8.000 pasos diarios.
+                Meta: <strong>62 kg ➔ 55 kg (-7 kg)</strong> con tonificación en casa (Silla + Colchoneta + Mancuernas 6 kg). Perfil: <span className="text-emerald-300 font-bold">1.55 m • 27 años</span> • Nutrición: <span className="text-teal-300 font-bold">1.350 - 1.400 kcal (Alto TEF) / 100g proteína mín.</span> • Predisposición genética & metabolismo basal lento • <span className="text-red-300 font-bold">Cero palta</span> • Meta NEAT: 8.000 pasos.
               </p>
             ) : (
               <p className="text-sm text-slate-300 mt-2 max-w-xl leading-relaxed">
@@ -140,7 +140,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
                 <div className="flex items-center justify-center gap-1 mt-0.5">
                   <Scale className="w-4 h-4 text-emerald-400" />
                   <span className="text-2xl font-heading font-black text-emerald-400">
-                    {latestMeas.bodyWeight || profile.currentWeightKg}
+                    {latestMeas.bodyWeight || profile.currentWeightKg || profile.weightKg}
                   </span>
                   <span className="text-xs font-mono text-slate-400">kg</span>
                 </div>
@@ -199,15 +199,6 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
           </div>
         </div>
       </div>
-
-      {/* Step Counter Widget for Miranda (or available to anyone tracking steps) */}
-      {isMiranda && (
-        <StepCounterWidget
-          currentSteps={todayLog.stepsCount || 0}
-          targetSteps={profile.targetSteps || 7000}
-          onUpdateSteps={(steps) => onUpdateTodayLog({ stepsCount: steps })}
-        />
-      )}
 
       {/* Daily Quick Check-in & Habit Confirmation */}
       <div className="glass-card rounded-2xl p-5 sm:p-6 border border-white/10">
@@ -370,7 +361,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
           />
           <StepCounterWidget
             currentSteps={todayLog.stepsCount || 0}
-            targetSteps={profile.targetSteps || 7000}
+            targetSteps={profile.targetSteps || 8000}
             onUpdateSteps={(steps) => onUpdateTodayLog({ stepsCount: steps })}
           />
         </div>

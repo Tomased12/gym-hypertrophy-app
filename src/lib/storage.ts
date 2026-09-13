@@ -48,17 +48,17 @@ export const DEFAULT_MIRANDA_PROFILE: UserProfile = {
   startWeightKg: 62,
   currentWeightKg: 62,
   targetWeightKg: 55.0, // Meta: 55 kg
-  tdeeMaintenance: 1750,
-  targetCalories: 1425, // Déficit moderado para perder grasa de forma progresiva
-  targetSurplusCalories: 1425,
+  tdeeMaintenance: 1700,
+  targetCalories: 1380, // Déficit sostenible (1.350 - 1.400 kcal) que protege la tiroides
+  targetSurplusCalories: 1380,
   calorieMode: 'deficit',
-  targetProteinGrams: 100, // 95 - 105g (~1.6 g/kg)
-  targetCarbsGrams: 135, // Carbohidratos complejos ricos en fibra
-  targetFatsGrams: 42, // Grasas saludables insaturadas
-  targetSteps: 7000, // 6.000 a 8.000 pasos/día para salud cardiovascular y NEAT
+  targetProteinGrams: 100, // Mínimo estricto 100g para forzar Efecto Térmico (TEF) y masa magra
+  targetCarbsGrams: 130, // Carbohidratos complejos ricos en fibra soluble
+  targetFatsGrams: 40, // Grasas saludables insaturadas (anti-colesterol)
+  targetSteps: 8000, // Meta NEAT: 8.000 pasos/día para revertir el metabolismo basal bajo
   targetWaterLiters: 2.2, // 2.2L / día para saciedad, control de antojos post-comida y fibra/colesterol
-  dietaryRestrictions: ['sin_palta', 'bajo_colesterol_saturado'],
-  healthNotes: 'Colesterol elevado. Exclusión total de palta/aguacate. Control de ansiedad por dulces post-comida con infusiones y fibra.',
+  dietaryRestrictions: ['sin_palta', 'bajo_colesterol_saturado', 'alto_tef_proteico', 'orden_ingesta_anti_pico'],
+  healthNotes: 'Predisposición genética al sobrepeso y metabolismo basal bajo/lento. Déficit sostenible 1.350 - 1.400 kcal con alto TEF proteico (mínimo 100g proteína) para elevar gasto digestivo y proteger tiroides. Regla metabólica: vegetales/fibra primero, luego proteína y carbohidratos al final. Colesterol elevado: cero palta. Meta NEAT: 8.000 pasos/día.',
   startDateISO: new Date().toISOString(),
   currentDay: 1,
 };

@@ -1,4 +1,4 @@
-﻿import type { DayRoutine, Exercise } from '../types';
+import type { DayRoutine, Exercise } from '../types';
 
 const DB_IMG_BASE = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
 
@@ -187,20 +187,52 @@ export const MIRANDA_EXERCISE_LIBRARY: Record<string, Exercise> = {
     videoEmbedUrl: '3VcKaXpzqRo',
     videoTitle: 'Elevaciones Laterales Correctas',
     visualCue: 'Codos ligeramente flexionados, elevación suave hasta la altura del hombro en 2s y bajada en 3s.'
+  },
+
+  // 7. Zancadas Estáticas con Apoyo en Silla (Split Squat) - Activación metabólica y gasto calórico basal
+  ZANCADAS_ESTATICAS: {
+    id: 'miranda_zancadas_estaticas',
+    name: 'Zancadas Estáticas con Apoyo en Silla (Split Squat)',
+    muscleTarget: 'Glúteos & Piernas (Bajo Impacto)',
+    equipment: 'Silla',
+    sets: 3,
+    reps: '10 - 12 reps por pierna',
+    tempo: '3s Bajada controlada • 1s Pausa abajo • 1s Subida firme',
+    restSeconds: 60,
+    rpe: 'RPE 8 (Reclutamiento profundo de fibras para acelerar el metabolismo)',
+    setupTime: 'Coloca una silla a tu lado para apoyar una mano y mantener estabilidad total.',
+    technique: 'Da un paso largo hacia atrás, apoyando la punta del pie trasero. Apoya una mano en el respaldo de la silla para equilibrio. Desciende verticalmente flexionando ambas rodillas a 90° durante 3 segundos lentos. La rodilla delantera nunca debe sobrepasar excesivamente la punta del pie. Empuja desde el talón delantero para subir en 1 segundo.',
+    biomechanicCues: [
+      'Al reclutar los cuádriceps y glúteos de forma unilateral, forzamos un alto gasto calórico basal post-entreno (EPOC) para contrarrestar el metabolismo lento.',
+      'El apoyo en la silla elimina la inestabilidad y protege al 100% las articulaciones de la rodilla.',
+      'Mantén el torso erguido y el abdomen firme en cada repetición.'
+    ],
+    mistakesToAvoid: [
+      'Dejar que la rodilla delantera colapse hacia adentro.',
+      'Inclinar el tronco excesivamente hacia adelante cargando la zona lumbar.'
+    ],
+    animationFrames: [
+      `${DB_IMG_BASE}Bodyweight_Split_Squats/0.jpg`,
+      `${DB_IMG_BASE}Bodyweight_Split_Squats/1.jpg`
+    ],
+    videoEmbedUrl: 'QOVaHwm-Q6U',
+    videoTitle: 'Zancadas Estáticas con Apoyo para Principiantes',
+    visualCue: 'Torso erguido, mano en silla de apoyo. Descenso en 3s a 90° y empuje firme con el talón delantero.'
   }
 };
 
 export const MIRANDA_WEEKLY_TEMPLATE: DayRoutine[] = [
   {
     dayOfWeek: 1,
-    title: 'Día 1: Tonificación Full-Body A (Fuerza & Postura)',
-    tagline: 'Sentadillas en Silla + Flexiones Inclinadas + Plancha + Pasos Diarios',
+    title: 'Día 1: Tonificación Full-Body A (Elevación Metabólica & Fuerza)',
+    tagline: 'Box Squat a la Silla + Zancadas Estáticas + Flexiones Inclinadas + Plancha',
     isRestDay: false,
     focusMuscles: ['Cuádriceps & Glúteos', 'Pectoral & Brazos', 'Core'],
     estimatedMinutes: 35,
-    recoveryNote: 'Sesión suave y progresiva. Recuerda tomar agua y mantener el tempo de 3s en cada descenso.',
+    recoveryNote: 'Sesión diseñada para activar grandes grupos musculares y acelerar el gasto calórico en reposo. Mantén el tempo lento de 3s.',
     exercises: [
       MIRANDA_EXERCISE_LIBRARY.SENTADILLA_SILLA,
+      MIRANDA_EXERCISE_LIBRARY.ZANCADAS_ESTATICAS,
       MIRANDA_EXERCISE_LIBRARY.FLEXIONES_INCLINADAS_SILLA,
       MIRANDA_EXERCISE_LIBRARY.PLANCHA_ABDOMINAL
     ]
@@ -208,21 +240,21 @@ export const MIRANDA_WEEKLY_TEMPLATE: DayRoutine[] = [
   {
     dayOfWeek: 2,
     title: 'Día 2: Descanso Activo & Caminata Saludable',
-    tagline: 'Meta: 6.000 a 8.000 pasos para salud cardiovascular y colesterol',
+    tagline: 'Meta: 8.000 pasos para reactivar metabolismo y salud cardiovascular',
     isRestDay: true,
     focusMuscles: ['Cardiovascular', 'Salud Metabólica'],
     estimatedMinutes: 30,
-    recoveryNote: 'Hoy no hay ejercicios de fuerza. Prioriza una caminata relajante de 30-45 minutos al aire libre o en cinta para sumar tus pasos y reducir el cortisol.',
+    recoveryNote: 'Hoy no hay ejercicios de fuerza. Prioriza caminatas cortas tras las comidas para reactivar el metabolismo y frenar el almacenamiento graso.',
     exercises: []
   },
   {
     dayOfWeek: 3,
-    title: 'Día 3: Tonificación Full-Body B (Cadena Posterior & Hombros)',
-    tagline: 'Puente de Glúteos + Peso Muerto Rumano + Elevaciones Laterales',
+    title: 'Día 3: Tonificación Full-Body B (Cadena Posterior & Postura)',
+    tagline: 'Puente de Glúteos con Pausa + Peso Muerto Rumano + Elevaciones Laterales',
     isRestDay: false,
     focusMuscles: ['Glúteos & Isquios', 'Hombros & Brazos Firmes'],
     estimatedMinutes: 35,
-    recoveryNote: 'Excelente para tonificar glúteos y mejorar la postura de la espalda y hombros sin impacto articular.',
+    recoveryNote: 'El puente de glúteos activa la musculatura más potente del cuerpo, estimulando la quema calórica continua y mejorando la postura.',
     exercises: [
       MIRANDA_EXERCISE_LIBRARY.PUENTE_GLUTEOS,
       MIRANDA_EXERCISE_LIBRARY.PESO_MUERTO_RUMANO,
@@ -236,19 +268,20 @@ export const MIRANDA_WEEKLY_TEMPLATE: DayRoutine[] = [
     isRestDay: true,
     focusMuscles: ['Regeneración & Movilidad Articular'],
     estimatedMinutes: 20,
-    recoveryNote: 'Descanso activo: camina a ritmo cómodo para alcanzar tus 7.000 pasos. Toma una infusión de manzanilla o té verde para calmar el sistema nervioso.',
+    recoveryNote: 'Descanso activo: suma tus pasos diarios a ritmo cómodo. Toma una infusión de manzanilla o té verde para calmar el sistema nervioso.',
     exercises: []
   },
   {
     dayOfWeek: 5,
-    title: 'Día 5: Circuito Funcional Integral (Quema & Tono)',
-    tagline: 'Sentadilla en Silla + Puente de Glúteos + Flexiones Inclinadas + Plancha',
+    title: 'Día 5: Circuito Funcional Integral (Trío Metabólico Piernas & Glúteos)',
+    tagline: 'Box Squat + Zancadas Estáticas + Puente de Glúteos + Flexiones Inclinadas + Plancha',
     isRestDay: false,
-    focusMuscles: ['Cuerpo Completo', 'Core', 'Resistencia Muscular'],
+    focusMuscles: ['Trío Multiarticular Glúteos/Piernas', 'Core & Quema Basal'],
     estimatedMinutes: 40,
-    recoveryNote: 'Última sesión de fuerza de la semana. Haz 3 vueltas con calma, sintiendo cada músculo trabajar.',
+    recoveryNote: 'Trío clave (box squat + zancadas + puente de glúteos) para combatir el metabolismo lento reclutando las fibras musculares de mayor demanda calórica.',
     exercises: [
       MIRANDA_EXERCISE_LIBRARY.SENTADILLA_SILLA,
+      MIRANDA_EXERCISE_LIBRARY.ZANCADAS_ESTATICAS,
       MIRANDA_EXERCISE_LIBRARY.PUENTE_GLUTEOS,
       MIRANDA_EXERCISE_LIBRARY.FLEXIONES_INCLINADAS_SILLA,
       MIRANDA_EXERCISE_LIBRARY.PLANCHA_ABDOMINAL

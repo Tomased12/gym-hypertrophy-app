@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Footprints, Plus, CheckCircle2, TrendingUp, Sparkles } from 'lucide-react';
 import { playBeep } from '../lib/sound';
 
@@ -10,7 +10,7 @@ interface StepCounterWidgetProps {
 
 export const StepCounterWidget: React.FC<StepCounterWidgetProps> = ({
   currentSteps = 0,
-  targetSteps = 7000,
+  targetSteps = 8000,
   onUpdateSteps,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -18,6 +18,18 @@ export const StepCounterWidget: React.FC<StepCounterWidgetProps> = ({
 
   const progress = Math.min(100, Math.round((currentSteps / targetSteps) * 100));
   const isGoalReached = currentSteps >= targetSteps;
+
+  const handleToggleCompleted = () => {
+    if (isGoalReached) {
+      onUpdateSteps(0);
+      setCustomVal('0');
+      playBeep('tick');
+    } else {
+      onUpdateSteps(targetSteps);
+      setCustomVal(targetSteps.toString());
+      playBeep('success');
+    }
+  };
 
   const handleAdd = (amount: number) => {
     const next = Math.max(0, currentSteps + amount);
@@ -46,9 +58,9 @@ export const StepCounterWidget: React.FC<StepCounterWidgetProps> = ({
             <Footprints className="w-6 h-6 animate-pulse" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <h3 className="font-heading font-black text-lg text-white">
-                Contador de Pasos Diarios (NEAT)
+                Meta NEAT: {targetSteps.toLocaleString()} pasos al día
               </h3>
               {isGoalReached && (
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-[10px] font-bold text-emerald-300">
@@ -56,8 +68,8 @@ export const StepCounterWidget: React.FC<StepCounterWidgetProps> = ({
                 </span>
               )}
             </div>
-            <p className="text-xs text-slate-300 mt-1 max-w-md">
-              Caminar entre <strong className="text-emerald-300">6.000 y 8.000 pasos</strong> activa la lipólisis, mejora el perfil lipídico (reduce colesterol LDL) y cuida las articulaciones sin impacto.
+            <p className="text-xs text-slate-300 mt-1 max-w-md leading-relaxed">
+              <strong className="text-emerald-300">Caminar después de comer reactiva tu metabolismo</strong> y frena el almacenamiento de grasa sin generar fatiga. Ideal contra el metabolismo lento.
             </p>
           </div>
         </div>
@@ -110,13 +122,31 @@ export const StepCounterWidget: React.FC<StepCounterWidgetProps> = ({
         </div>
       </div>
 
-      {/* Quick Add Buttons */}
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-2 relative z-10">
-        <span className="text-xs text-slate-400 flex items-center gap-1">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-          Suma rápida de caminata:
-        </span>
+      {/* Quick Add Buttons & Compliance Selector Checkbox */}
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 relative z-10 pt-2 border-t border-white/5">
+        <button
+          type="button"
+          onClick={handleToggleCompleted}
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-bold transition-all shadow-sm ${
+            isGoalReached
+              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 hover:bg-emerald-500/30'
+              : 'bg-dark-850 hover:bg-emerald-500/10 text-slate-300 hover:text-emerald-300 border-white/10'
+          }`}
+          title="Selector rápido para registrar o desmarcar la meta diaria completa"
+        >
+          <div className={`w-4 h-4 rounded flex items-center justify-center transition-colors ${
+            isGoalReached ? 'bg-emerald-400 text-black' : 'border border-slate-500 bg-dark-900'
+          }`}>
+            {isGoalReached && <CheckCircle2 className="w-3.5 h-3.5 stroke-[3]" />}
+          </div>
+          <span>{isGoalReached ? 'Meta NEAT Cumplida (8.000 pasos)' : 'Marcar Meta NEAT Cumplida'}</span>
+        </button>
+
         <div className="flex items-center gap-2">
+          <span className="text-xs text-slate-400 flex items-center gap-1">
+            <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+            Sumar:
+          </span>
           <button
             type="button"
             onClick={() => handleAdd(500)}

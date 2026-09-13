@@ -40,7 +40,9 @@ export function analyzeDailyNutritionBalance(
   meals: MealEntry[]
 ): MealRebalanceAnalysis {
   const isMiranda = profile.id === 'miranda';
-  const targetCalories = profile.targetCalories || profile.targetSurplusCalories || (isMiranda ? 1425 : 2650);
+  const targetCalories = isMiranda 
+    ? (profile.targetCalories === 1425 ? 1380 : (profile.targetCalories || 1380))
+    : (profile.targetCalories || profile.targetSurplusCalories || 2650);
   const targetProtein = profile.targetProteinGrams || (isMiranda ? 100 : 145);
 
   const caloriesConsumed = meals.reduce((acc, m) => acc + m.calories, 0);
@@ -326,7 +328,7 @@ export async function fetchAdaptiveRecommendationsWithGemini(
     : '(Aún no ha registrado comidas hoy)';
 
   const prompt = `Actúa como un entrenador y nutricionista deportivo de élite.
-El usuario se llama ${profile.name}, tiene ${profile.age} años, pesa ${profile.weightKg} kg y su objetivo es ${isMiranda ? 'DÉFICIT CALÓRICO y tonificación hacia los 55 kg' : 'SUPERÁVIT CALÓRICO e hipertrofia de brazos'}.
+El usuario se llama ${profile.name}, tiene ${profile.age} años, pesa ${profile.weightKg} kg y su objetivo es ${isMiranda ? 'DÉFICIT CALÓRICO SOSTENIBLE (1.350 - 1.400 kcal) y tonificación hacia los 55 kg. Condición metabólica: predisposición genética al sobrepeso y metabolismo basal lento. Estrategia: alto Efecto Térmico de los Alimentos (TEF) asegurando mínimo 100g de proteína/día y orden de ingesta (vegetales primero, proteína, carbohidratos complejos al final) para evitar picos de insulina.' : 'SUPERÁVIT CALÓRICO e hipertrofia de brazos'}.
 
 SITUACIÓN NUTRICIONAL EXACTA DEL DÍA DE HOY:
 - Meta diaria: ${analysis.targetCalories} kcal y ${analysis.targetProtein}g de proteína.
@@ -342,7 +344,7 @@ ${analysis.status === 'compensation'
 }
 
 REGLAS ESPECÍFICAS OBLIGATORIAS:
-${isMiranda ? '- REGLA ESTRICTA 1: CERO PALTA / AGUACATE. No incluyas palta en ninguna recomendación.\n- REGLA ESTRICTA 2: Control de colesterol: grasas saludables vegetales (aceite de oliva crudo, chía, nueces medidas), nada de fritos ni grasas saturadas.\n- Incluye opciones anti-ansiedad de dulces saludables (frutillas con cacao puro 100%, canela, infusiones digestivas calientes).' : '- Prioriza fuentes ricas en proteína para hipertrofia de brazos (pollo, huevos, atún, avena, leche).'}
+${isMiranda ? '- REGLA ESTRICTA 1: CERO PALTA / AGUACATE. No incluyas palta en ninguna recomendación.\n- REGLA ESTRICTA 2: Control de colesterol y metabolismo lento: asegurar fuentes de alto TEF (mínimo 25-30g de proteína magra como pechuga, atún al natural, claras, yogur griego 0%), fibra abundante para saciedad y grasas monoinsaturadas medidas (aceite de oliva virgen extra crudo, chía).\n- REGLA ESTRICTA 3: En el campo "whyThisOption", menciona brevemente el efecto térmico (TEF) o la recomendación de orden de ingesta (vegetales primero, luego proteína, al final carbohidratos).\n- Incluye opciones anti-ansiedad de dulces saludables (frutillas con cacao puro 100%, canela, infusiones digestivas calientes).' : '- Prioriza fuentes ricas en proteína para hipertrofia de brazos (pollo, huevos, atún, avena, leche).'}
 - Próxima comida objetivo sugerida: ${analysis.nextSuggestedMealType}.
 
 Genera exactamente 3 opciones variadas que ayuden a equilibrar el día:

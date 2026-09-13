@@ -130,7 +130,9 @@ export function App() {
     const totalFat = Math.round(updatedMeals.reduce((acc, m) => acc + m.fats, 0) * 10) / 10;
 
     const isMiranda = profile.id === 'miranda';
-    const targetCals = profile.targetCalories || profile.targetSurplusCalories || (isMiranda ? 1425 : 2650);
+    const targetCals = isMiranda
+      ? (profile.targetCalories === 1425 ? 1380 : (profile.targetCalories || 1380))
+      : (profile.targetCalories || profile.targetSurplusCalories || 2650);
     const targetProt = profile.targetProteinGrams || (isMiranda ? 100 : 140);
 
     const nutritionMet = isMiranda
@@ -156,7 +158,9 @@ export function App() {
     const totalFat = Math.round(updatedMeals.reduce((acc, m) => acc + m.fats, 0) * 10) / 10;
 
     const isMiranda = profile.id === 'miranda';
-    const targetCals = profile.targetCalories || profile.targetSurplusCalories || (isMiranda ? 1425 : 2650);
+    const targetCals = isMiranda
+      ? (profile.targetCalories === 1425 ? 1380 : (profile.targetCalories || 1380))
+      : (profile.targetCalories || profile.targetSurplusCalories || 2650);
     const targetProt = profile.targetProteinGrams || (isMiranda ? 100 : 140);
 
     const nutritionMet = isMiranda
