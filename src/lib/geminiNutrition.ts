@@ -1,6 +1,7 @@
 import type { RecognizedFoodItem } from '../types';
 import { parseMealText, type ParseResult } from './nutritionParser';
 
+const STORAGE_KEY_GEMINI_KEY = 'arm60_gemini_api_key';
 const DEFAULT_CONFIGURED_KEY = typeof atob !== 'undefined'
   ? atob('QVEuQWI4Uk42SmVQVmZoOEJpbk5nSUVhNlhyMzF0THo5LW1STlRGakhMbExwNm56SWVNcEE=')
   : '';
