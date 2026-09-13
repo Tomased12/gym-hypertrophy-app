@@ -72,7 +72,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="font-heading font-black tracking-wider text-lg sm:text-xl text-white">
                   {isMiranda ? 'FIT' : 'ARM'}<span className={isMiranda ? 'text-emerald-400' : 'text-amber-400'}>-60</span>
                 </span>
-                <span className={`text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded font-bold border ${
+                <span className={`text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded font-bold border hidden sm:inline-block ${
                   isMiranda 
                     ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
                     : 'bg-amber-500/20 text-amber-300 border-amber-500/30'
@@ -86,8 +86,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
 
-          {/* Profile Switcher */}
-          <div className="shrink-0">
+          {/* Profile Switcher (Desktop & Tablet) */}
+          <div className="hidden sm:block shrink-0">
             <ProfileSwitcher 
               activeUserId={activeUserId} 
               onSwitchUser={onSwitchUser} 
@@ -201,8 +201,17 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
 
-      {/* Mobile Bottom Navigation Bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-dark-950/95 backdrop-blur-lg border-t border-white/10 px-2 py-1">
+      {/* Dedicated Mobile Profile Switcher Bar (Full Width, Large Touch Targets for iPhone) */}
+      <div className="sm:hidden px-3 py-1.5 bg-dark-950/95 border-t border-white/5">
+        <ProfileSwitcher 
+          activeUserId={activeUserId} 
+          onSwitchUser={onSwitchUser} 
+          fullWidth={true}
+        />
+      </div>
+
+      {/* Mobile Bottom Navigation Bar with iOS Safe-Area Padding */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-dark-950/95 backdrop-blur-lg border-t border-white/10 px-2 pt-1 pb-[max(0.6rem,env(safe-area-inset-bottom))]">
         <div className="flex items-center justify-around">
           <button
             onClick={() => onSelectTab('dashboard')}
