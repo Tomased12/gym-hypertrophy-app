@@ -4,124 +4,154 @@ import { getMirandaRoutineForCycleDay } from './mirandaWorkoutPlan';
 const DB_IMG_BASE = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
 
 export const EXERCISE_LIBRARY: Record<string, Exercise> = {
-  // --- TRÍCEPS (60% DEL VOLUMEN DEL BRAZO) ---
-  FONDOS_SILLA: {
-    id: 'fondos_silla',
-    name: 'Fondos de Tríceps en Silla (Bench Dips)',
+  // --- TRÍCEPS (60% DEL VOLUMEN DEL BRAZO - CERO DOLOR DE MUÑECA, CERO SILLAS) ---
+  PRESS_CERRADO_TRICEPS_COLCHONETA: {
+    id: 'press_cerrado_triceps_colchoneta',
+    name: 'Press Cerrado en Colchoneta con Mancuernas Juntas (Cero Dolor de Muñeca)',
     muscleTarget: 'Tríceps (60% del brazo)',
-    equipment: 'Silla',
-    sets: 4,
-    reps: '15 - 25 reps (RIR 1-2)',
-    tempo: '3s Bajada excéntrica • 1s Pausa isométrica arriba • 1s Subida',
-    restSeconds: 75,
-    rpe: 'RPE 9 (Fallo técnico cercano)',
-    setupTime: 'Coloca la silla firme contra la pared para evitar desplazamientos.',
-    technique: 'Apoya las palmas en el borde frontal de la silla, codos orientados hacia atrás. Piernas extendidas o pies apoyados sobre la colchoneta. Desciende en 3 segundos estrictos flexionando los codos a 90° con la espalda rozando la silla. Sube y mantén 1 segundo de contracción isométrica máxima bloqueando con los tríceps.',
+    equipment: 'Mancuernas + Colchoneta',
+    sets: 2,
+    reps: '8 - 12 reps (RIR 2: deja 2 reps antes del fallo)',
+    tempo: '2s Bajada hasta rozar colchoneta • 1s Bloqueo de tríceps arriba',
+    restSeconds: 90,
+    rpe: 'RPE 7.5 - 8 (Tensión pura sin quemazón destructiva)',
+    setupTime: 'Acuéstate en la colchoneta con rodillas dobladas. Junta ambas mancuernas de 6 kg en el centro del pecho con agarre neutro (palmas enfrentadas). Cero tensión en muñecas ni hombros.',
+    technique: 'Mantén las dos mancuernas pegadas una contra otra y las muñecas perfectamente rectas (sin flexionarlas hacia atrás). Empuja hacia el techo extendiendo los codos y contrayendo al máximo los tríceps durante 1 segundo arriba. Desciende en 2 segundos lentos manteniendo los codos pegados a las costillas hasta que los tríceps rocen suavemente la colchoneta. Vuelve a empujar con control.',
     biomechanicCues: [
-      'TEMPO OBLIGATORIO: 3s de descenso excéntrico para maximizar micro-roturas miofibrilares.',
-      '1 segundo de compresión isométrica en la parte más alta para bombeo vascular extremo.',
-      'Codos pegados hacia atrás, sin abrir hacia los lados.'
+      'CERO DOLOR DE MUÑECAS: El agarre neutro (palmas mirándose) mantiene la muñeca en su eje anatómico más resistente, eliminando toda la compresión de los fondos.',
+      'PROTECCIÓN ARTICULAR DE HOMBRO: El suelo actúa como tope de seguridad e impide la rotación interna lesiva que producen las sillas.',
+      'Juntar las dos mancuernas en el centro genera una contracción isométrica continua en las cabezas lateral y medial del tríceps.'
     ],
     mistakesToAvoid: [
-      'Alejar la pelvis de la silla (crea torsión lesiva en el manguito rotador anterior).',
-      'Hacer repeticiones rápidas o con rebote sin respetar los 3 segundos de bajada.'
+      'Abrir los codos como alas hacia los lados (deben ir pegados al cuerpo a 45°).',
+      'Rebotar los codos bruscamente contra el suelo.'
     ],
     animationFrames: [
-      `${DB_IMG_BASE}Bench_Dips/0.jpg`,
-      `${DB_IMG_BASE}Bench_Dips/1.jpg`
+      `${DB_IMG_BASE}Dumbbell_Floor_Press/0.jpg`,
+      `${DB_IMG_BASE}Dumbbell_Floor_Press/1.jpg`
     ],
-    videoEmbedUrl: 'c3ZGl4pAwZ4',
-    videoTitle: 'Fondos de Tríceps en Silla - Técnica',
-    visualCue: 'Codos cerrados apuntando directamente hacia atrás a 90°. La espalda desciende vertical rozando el asiento de la silla.'
+    videoEmbedUrl: 'uUGDRwge4F8',
+    videoTitle: 'Press Cerrado con Mancuernas en el Suelo (Floor Press Tríceps)',
+    visualCue: 'Acostado en la colchoneta. Mancuernas juntas con agarre neutro. Los codos bajan pegados a las costillas y rozan la colchoneta.'
+  },
+
+  // Alias para retrocompatibilidad
+  FONDOS_SILLA: {
+    id: 'press_cerrado_triceps_colchoneta',
+    name: 'Press Cerrado en Colchoneta con Mancuernas Juntas (Cero Dolor de Muñeca)',
+    muscleTarget: 'Tríceps (60% del brazo)',
+    equipment: 'Mancuernas + Colchoneta',
+    sets: 2,
+    reps: '8 - 12 reps (RIR 2: deja 2 reps antes del fallo)',
+    tempo: '2s Bajada hasta rozar colchoneta • 1s Bloqueo de tríceps arriba',
+    restSeconds: 90,
+    rpe: 'RPE 7.5 - 8 (Tensión pura sin quemazón destructiva)',
+    setupTime: 'Acuéstate en la colchoneta con rodillas dobladas. Junta ambas mancuernas de 6 kg en el centro del pecho con agarre neutro (palmas enfrentadas). Cero tensión en muñecas ni hombros.',
+    technique: 'Mantén las dos mancuernas pegadas una contra otra y las muñecas perfectamente rectas (sin flexionarlas hacia atrás). Empuja hacia el techo extendiendo los codos y contrayendo al máximo los tríceps durante 1 segundo arriba. Desciende en 2 segundos lentos manteniendo los codos pegados a las costillas hasta que los tríceps rocen suavemente la colchoneta. Vuelve a empujar con control.',
+    biomechanicCues: [
+      'CERO DOLOR DE MUÑECAS: El agarre neutro (palmas mirándose) mantiene la muñeca en su eje anatómico más resistente, eliminando toda la compresión de los fondos.',
+      'PROTECCIÓN ARTICULAR DE HOMBRO: El suelo actúa como tope de seguridad e impide la rotación interna lesiva que producen las sillas.',
+      'Juntar las dos mancuernas en el centro genera una contracción isométrica continua en las cabezas lateral y medial del tríceps.'
+    ],
+    mistakesToAvoid: [
+      'Abrir los codos como alas hacia los lados (deben ir pegados al cuerpo a 45°).',
+      'Rebotar los codos bruscamente contra el suelo.'
+    ],
+    animationFrames: [
+      `${DB_IMG_BASE}Dumbbell_Floor_Press/0.jpg`,
+      `${DB_IMG_BASE}Dumbbell_Floor_Press/1.jpg`
+    ],
+    videoEmbedUrl: 'uUGDRwge4F8',
+    videoTitle: 'Press Cerrado con Mancuernas en el Suelo (Floor Press Tríceps)',
+    visualCue: 'Acostado en la colchoneta. Mancuernas juntas con agarre neutro. Los codos bajan pegados a las costillas y rozan la colchoneta.'
   },
 
   PRESS_FRANCES_COLCHONETA: {
     id: 'press_frances_colchoneta',
-    name: 'Press Francés en Colchoneta con Mancuernas de 6 kg',
+    name: 'Press Francés en Colchoneta con Mancuernas (Agarre Neutro)',
     muscleTarget: 'Tríceps (60% del brazo)',
     equipment: 'Mancuernas + Colchoneta',
-    sets: 4,
-    reps: '15 - 25 reps (RIR 1-2 o fallo)',
-    tempo: '3s Bajada lenta • 1s Isometría en estiramiento y contracción',
-    restSeconds: 75,
-    rpe: 'RPE 9 (Máxima tensión metabólica con 6 kg)',
-    setupTime: 'Acuéstate sobre la colchoneta con mancuernas de 6 kg en agarre neutro.',
-    technique: 'Tumbado en la colchoneta, inclina los brazos 15° hacia atrás de la perpendicular para que la cabeza larga del tríceps permanezca bajo tensión continua. Flexiona los codos en 3 segundos bajando las mancuernas hacia las sienes/suelo. Pausa 1 segundo en el estiramiento y extiende con potencia, apretando 1 segundo.',
+    sets: 2,
+    reps: '8 - 12 reps (RIR 2)',
+    tempo: '2s Bajada lenta • 1s Extensión controlada',
+    restSeconds: 90,
+    rpe: 'RPE 7.5 - 8 (Control y tensión sin fatiga extrema)',
+    setupTime: 'Acuéstate sobre la colchoneta con mancuernas en agarre neutro (palmas enfrentadas). Si 2 mancuernas de 6 kg son pesadas, puedes usar 1 sola mancuerna de 6 kg tomada con ambas manos.',
+    technique: 'Tumbado en la colchoneta con rodillas dobladas. Brazos apuntando levemente hacia atrás de la cabeza (75° respecto al suelo). Flexiona únicamente los codos bajando las mancuernas hacia los lados de la frente/orejas en 2 segundos. Extiende apretando los tríceps 1 segundo arriba.',
     biomechanicCues: [
-      'Con 6 kg, el secreto es la lentitud: 3 segundos de bajada multiplican la carga interna percibida.',
-      'La colchoneta actúa como seguro articular impidiendo sobre-extensión brusca del codo.',
-      'Mantén los codos clavados en su ángulo, no dejes que oscilen hacia el pecho.'
+      'Agarre neutro: muñecas alineadas en línea recta con el antebrazo, sin rotaciones.',
+      'La colchoneta actúa como tope seguro impidiendo sobre-extensión del codo.',
+      'Mantén los codos quietos apuntando hacia el techo.'
     ],
     mistakesToAvoid: [
-      'Mover el hombro en lugar de flexo-extender exclusivamente el codo.',
-      'Subir con inercia o balanceo de torso.'
+      'Mover los hombros hacia adelante y atrás.',
+      'Arquear la espalda lumbar de la colchoneta.'
     ],
     animationFrames: [
       `${DB_IMG_BASE}Lying_Dumbbell_Tricep_Extension/0.jpg`,
       `${DB_IMG_BASE}Lying_Dumbbell_Tricep_Extension/1.jpg`
     ],
     videoEmbedUrl: 'd_KZxkY_0cM',
-    videoTitle: 'Floor Skullcrusher con Mancuernas',
-    visualCue: 'Los brazos forman un ángulo de 75-80° hacia la cabeza, no perpendiculares. Las mancuernas bajan rozando las orejas.'
+    videoTitle: 'Floor Skullcrusher con Mancuernas en Suelo',
+    visualCue: 'Los brazos inclinados levemente hacia la cabeza. Codos firmes; flexión y extensión pura de antebrazo.'
   },
 
   COPA_DOS_MANOS: {
     id: 'copa_dos_manos',
-    name: 'Extensión Copa Sentado en Silla (Mancuerna 6 kg)',
+    name: 'Extensión Copa en Colchoneta (Sentado o de Rodillas - Mancuerna 6 kg)',
     muscleTarget: 'Tríceps (60% del brazo)',
-    equipment: 'Mancuernas + Silla',
-    sets: 3,
-    reps: '18 - 25 reps (Alto volumen)',
-    tempo: '3s Bajada tras la nuca • 1s Pausa isométrica arriba',
-    restSeconds: 75,
-    rpe: 'RPE 8.5 (Quemazón profunda en cabeza larga)',
-    setupTime: 'Siéntate erguido en la silla con abdomen contraído.',
-    technique: 'Sujeta la mancuerna de 6 kg con ambas manos bajo el disco superior (o una en cada mano si buscas unilateral). Elévala sobre la cabeza. Desciende la mancuerna por detrás de la nuca en 3 segundos sintiendo el estiramiento máximo del tríceps. Pausa 1 segundo abajo y extiende hacia el techo con 1 segundo de contracción en el pico.',
+    equipment: 'Mancuernas + Colchoneta',
+    sets: 2,
+    reps: '8 - 12 reps (RIR 2)',
+    tempo: '2s Bajada tras la nuca • 1s Extensión hacia el techo',
+    restSeconds: 90,
+    rpe: 'RPE 7.5 - 8',
+    setupTime: 'Siéntate en la colchoneta con las piernas cruzadas o de rodillas, con el torso erguido y abdomen activo.',
+    technique: 'Sujeta una sola mancuerna de 6 kg verticalmente con ambas manos bajo el disco superior (copa). Elévala sobre tu cabeza. Desciende el peso por detrás de la nuca flexionando los codos en 2 segundos. Extiende hacia arriba y aprieta 1 segundo arriba.',
     biomechanicCues: [
-      'La cabeza larga del tríceps representa el mayor porcentaje de masa del brazo y solo se estira por encima de la cabeza.',
-      'Excéntrica de 3 segundos para activar fibras tipo I y II mediante estrés metabólico.',
-      'Espalda pegada y abdomen firme: no arquees la columna lumbar.'
+      'La cabeza larga del tríceps recibe su mayor estiramiento con el brazo por encima de la cabeza.',
+      'Mantén los codos apuntando al frente, sin abrirlos en exceso.',
+      'Glúteos y abdomen firmes en la colchoneta para estabilizar la columna.'
     ],
     mistakesToAvoid: [
-      'Abrir los codos en exceso como alas.',
-      'Acelerar el movimiento cuando empiece la fatiga.'
+      'Arquear la espalda baja.',
+      'Acelerar el movimiento cuando empiece a sentirse la fatiga.'
     ],
     animationFrames: [
       `${DB_IMG_BASE}Standing_Dumbbell_Triceps_Extension/0.jpg`,
       `${DB_IMG_BASE}Standing_Dumbbell_Triceps_Extension/1.jpg`
     ],
     videoEmbedUrl: '_gsUck-7M74',
-    videoTitle: 'Extensión de Tríceps Copa Sentado',
-    visualCue: 'Estiramiento profundo en la nuca. Al extender, no permitas que los codos se abran como alas hacia los costados.'
+    videoTitle: 'Extensión de Tríceps Copa a Dos Manos',
+    visualCue: 'Codos cerrados hacia adelante. Estiramiento suave tras la nuca y extensión vertical completa.'
   },
 
   PATADA_TRICEPS: {
     id: 'patada_triceps',
-    name: 'Patada de Tríceps Apoyado en Silla (Kickback 6 kg)',
+    name: 'Patada de Tríceps en Colchoneta en 4 Apoyos (Kickback 6 kg - Sin Silla)',
     muscleTarget: 'Tríceps (60% del brazo)',
-    equipment: 'Mancuernas + Silla',
-    sets: 3,
-    reps: '15 - 20 reps por brazo',
-    tempo: '3s Regreso controlado • 1.5s Pausa isométrica en contracción',
-    restSeconds: 60,
-    rpe: 'RPE 9.5 (Pico de contracción extrema)',
-    setupTime: 'Apoya una rodilla y una mano en la silla manteniendo la espalda horizontal.',
-    technique: 'Con la mancuerna de 6 kg, eleva el codo hasta que quede pegado a las costillas y paralelo al suelo. Extiende el antebrazo hacia atrás en línea recta. Mantén una contracción isométrica voluntaria durísima de 1.5 segundos con el brazo estirado. Regresa en 3 segundos lentos.',
+    equipment: 'Mancuernas + Colchoneta',
+    sets: 2,
+    reps: '8 - 12 reps por brazo (RIR 2)',
+    tempo: '2s Regreso • 1s Pausa isométrica con brazo estirado',
+    restSeconds: 90,
+    rpe: 'RPE 8 (Contracción pura sin impacto articular)',
+    setupTime: 'Ponte en 4 apoyos sobre la colchoneta (rodillas acolchadas y una mano plana apoyada en la colchoneta). Cero bordes de silla.',
+    technique: 'Con una mancuerna de 6 kg en la mano libre, sube el codo hasta que quede pegado a tus costillas y paralelo al suelo. Extiende el antebrazo hacia atrás hasta que el brazo quede recto. Aprieta el tríceps 1 segundo y regresa en 2 segundos controlados.',
     biomechanicCues: [
-      'La patada es el único ejercicio donde el tríceps se acorta al 100% en posición anatómica de extensión completa.',
-      'Con 6 kg, la pausa isométrica de 1.5 segundos arriba es donde ocurre la magia del estímulo.'
+      'La colchoneta acolchada proporciona una base ancha y 100% estable para las rodillas y la mano de apoyo.',
+      'El codo queda congelado como una bisagra contra las costillas.'
     ],
     mistakesToAvoid: [
-      'Dejar caer el codo al retornar la mancuerna.',
-      'Usar el impulso de rotación del torso para lanzar el peso.'
+      'Balancear el torso o dejar caer el codo al retornar el peso.'
     ],
     animationFrames: [
       `${DB_IMG_BASE}Tricep_Dumbbell_Kickback/0.jpg`,
       `${DB_IMG_BASE}Tricep_Dumbbell_Kickback/1.jpg`
     ],
     videoEmbedUrl: '6SS6K3lAwZ8',
-    videoTitle: 'Patada de Tríceps con Mancuerna',
-    visualCue: 'El codo queda congelado contra las costillas. Solo se mueve el antebrazo hasta la extensión horizontal completa.'
+    videoTitle: 'Patada de Tríceps con Mancuerna en Suelo',
+    visualCue: 'Codo pegado a las costillas sin moverse. Extensión hacia atrás con pausa de 1 segundo arriba.'
   },
 
   // --- BÍCEPS & BRAQUIAL ---
@@ -130,21 +160,20 @@ export const EXERCISE_LIBRARY: Record<string, Exercise> = {
     name: 'Curl con Mancuernas de 6 kg con Supinación Continua',
     muscleTarget: 'Bíceps',
     equipment: 'Mancuernas',
-    sets: 4,
-    reps: '15 - 25 reps (Fallo técnico)',
-    tempo: '3s Bajada excéntrica • 1s Giro y pausa isométrica arriba',
-    restSeconds: 75,
-    rpe: 'RPE 9',
-    setupTime: 'De pie, pies al ancho de hombros, hombros hacia atrás y abajo.',
-    technique: 'Sujeta las mancuernas de 6 kg. Al subir flexiona el codo mientras giras activamente la muñeca hacia afuera (supinación total). En la cima, gira la palma hacia el hombro elevando ligeramente el meñique y aprieta el bíceps 1 segundo en pausa isométrica. Baja en 3 segundos lentos sintiendo cómo el bíceps frena la carga.',
+    sets: 2,
+    reps: '8 - 12 reps (RIR 2: deja 2 reps en reserva)',
+    tempo: '2s Bajada excéntrica • 1s Giro y contracción arriba',
+    restSeconds: 90,
+    rpe: 'RPE 7.5 - 8 (Congestión óptima sin quemazón excesiva)',
+    setupTime: 'De pie o sentado en la colchoneta con espalda recta y hombros relajados.',
+    technique: 'Sujeta las mancuernas de 6 kg. Flexiona los codos girando la muñeca hacia afuera (supinación total). Aprieta el bíceps 1 segundo arriba y baja en 2 segundos controlados sintiendo cómo el músculo frena el descenso.',
     biomechanicCues: [
-      '3 segundos de bajada excéntrica: no dejes caer el peso tras completar la repetición.',
-      'El bíceps es un músculo con alta respuesta al tiempo bajo tensión (TUT). 20 reps a 4s por rep = 80 segundos de estímulo anabólico puro.',
-      'Codos pegados a los costados sin adelantarse.'
+      '2 segundos de bajada controlada: estimula la síntesis de proteína sin agotar el glucógeno.',
+      'Codos pegados a los costados sin balancear la espalda.'
     ],
     mistakesToAvoid: [
-      'Balancear la cadera o tirar la espalda hacia atrás.',
-      'Perder la supinación antes de finalizar la bajada.'
+      'Balancear el torso para tomar impulso con la zona lumbar.',
+      'Apurar las repeticiones perdiendo el control del descenso.'
     ],
     animationFrames: [
       `${DB_IMG_BASE}Dumbbell_Bicep_Curl/0.jpg`,
@@ -152,27 +181,27 @@ export const EXERCISE_LIBRARY: Record<string, Exercise> = {
     ],
     videoEmbedUrl: 'ykJmrZ5v0Oo',
     videoTitle: 'Curl de Bíceps con Mancuernas y Supinación',
-    visualCue: 'Inicio con agarre neutro, giro de supinación al pasar las caderas. El dedo meñique termina más alto que el pulgar.'
+    visualCue: 'Inicio con agarre neutro, giro de supinación al subir. Codos pegados a las costillas.'
   },
 
   CURL_MARTILLO: {
     id: 'curl_martillo',
-    name: 'Curl Martillo Estricto (Braquial & Antebrazo - 6 kg)',
+    name: 'Curl Martillo Estricto (Braquial & Grosor de Brazo - 6 kg)',
     muscleTarget: 'Braquial & Antebrazos',
     equipment: 'Mancuernas',
-    sets: 4,
-    reps: '15 - 25 reps (RIR 1-2)',
-    tempo: '3s Bajada • 1s Isometría arriba con palmas neutras',
-    restSeconds: 75,
-    rpe: 'RPE 9 (Clave para ensanchar el grosor del brazo)',
-    setupTime: 'De pie o sentado en la silla con espalda recta.',
-    technique: 'Agarre neutro estricto (palmas enfrentadas). Eleva las mancuernas de 6 kg manteniendo los pulgares apuntando hacia arriba durante todo el recorrido. En la cima haz 1 segundo de pausa isométrica apretando el músculo braquial y el antebrazo. Desciende en 3 segundos controlados.',
+    sets: 2,
+    reps: '8 - 12 reps (RIR 2)',
+    tempo: '2s Bajada • 1s Isometría arriba con palmas neutras',
+    restSeconds: 90,
+    rpe: 'RPE 7.5 - 8 (Ensancha el brazo visto de frente)',
+    setupTime: 'De pie o sentado en la colchoneta con espalda recta.',
+    technique: 'Agarre neutro estricto (palmas mirándose). Sube las mancuernas de 6 kg con los pulgares apuntando hacia arriba. Aprieta el músculo braquial 1 segundo arriba y desciende en 2 segundos controlados.',
     biomechanicCues: [
-      'El músculo braquial se ubica debajo del bíceps: al hipertrofiarse empuja al bíceps hacia el exterior, dando un brazo notablemente más ancho de frente.',
-      'La excéntrica de 3 segundos fatiga las fibras del antebrazo y del braquiorradial sin necesidad de kilos excesivos.'
+      'El músculo braquial empuja al bíceps hacia afuera al crecer, dando mayor grosor al brazo.',
+      'Agarre neutro: el más seguro y cómodo para las muñecas.'
     ],
     mistakesToAvoid: [
-      'Girar las muñecas hacia supinación o pronación.',
+      'Girar las muñecas hacia los lados.',
       'Subir con inercia de los hombros.'
     ],
     animationFrames: [
@@ -181,58 +210,58 @@ export const EXERCISE_LIBRARY: Record<string, Exercise> = {
     ],
     videoEmbedUrl: 'zC3nLlEvin4',
     videoTitle: 'Curl Martillo con Mancuernas',
-    visualCue: 'Palmas enfrentadas durante el 100% de la trayectoria. Foco absoluto en el braquial y braquiorradial.'
+    visualCue: 'Palmas enfrentadas en todo momento. Foco absoluto en el braquial y antebrazo.'
   },
 
   CURL_CONCENTRADO_SILLA: {
     id: 'curl_concentrado_silla',
-    name: 'Curl Concentrado en Silla (Pico de Bíceps - 6 kg)',
+    name: 'Curl Concentrado en Colchoneta (Pico de Bíceps - 6 kg)',
     muscleTarget: 'Bíceps',
-    equipment: 'Mancuernas + Silla',
-    sets: 3,
-    reps: '15 - 20 reps por brazo',
-    tempo: '3s Descenso estricto • 1.5s Isometría en contracción pico',
-    restSeconds: 60,
-    rpe: 'RPE 10 (Fallo muscular técnico garantizado)',
-    setupTime: 'Siéntate en el borde de la silla, piernas abiertas.',
-    technique: 'Apoya el tríceps contra la cara interna de tu muslo. El brazo cuelga completamente extendido con la mancuerna de 6 kg. Flexiona el codo levantando la mancuerna hacia la cara sin mover el torso. En la cima aprieta el bíceps durante 1.5 segundos de isometría brutal. Desciende en 3 segundos lentos.',
+    equipment: 'Mancuernas + Colchoneta',
+    sets: 2,
+    reps: '8 - 12 reps por brazo (RIR 2)',
+    tempo: '2s Descenso estricto • 1s Isometría en contracción pico',
+    restSeconds: 90,
+    rpe: 'RPE 8 (Aislamiento puro sin trampas)',
+    setupTime: 'Siéntate en la colchoneta con piernas abiertas en V. Apoya el codo contra la cara interna del muslo.',
+    technique: 'El brazo cuelga extendido con la mancuerna de 6 kg. Flexiona el codo levantando el peso hacia el hombro sin mover el torso. En la cima aprieta el bíceps 1 segundo y baja en 2 segundos lentos.',
     biomechanicCues: [
-      'El muslo elimina cualquier posibilidad de trampa. Cada gramo de los 6 kg va directo a las fibras del bíceps.',
-      'Estira completamente el bíceps abajo antes de iniciar la siguiente repetición.'
+      'El muslo bloquea el codo impidiendo balanceos y asegurando aislamiento del bíceps.',
+      'Estira el brazo casi por completo abajo antes de la siguiente repetición.'
     ],
     mistakesToAvoid: [
-      'Despegar el codo del muslo durante la subida.',
-      'Tirar del cuello o torso.'
+      'Despegar el codo del muslo al subir.',
+      'Tirar del cuello o girar el pecho.'
     ],
     animationFrames: [
       `${DB_IMG_BASE}Concentration_Curls/0.jpg`,
       `${DB_IMG_BASE}Concentration_Curls/1.jpg`
     ],
     videoEmbedUrl: 'Jvj2wV0vOYU',
-    videoTitle: 'Curl Concentrado Sentado',
-    visualCue: 'El codo se bloquea en la parte interna del muslo. Cero oscilación del torso; aislamiento del pico del bíceps.'
+    videoTitle: 'Curl Concentrado en Suelo',
+    visualCue: 'Codo apoyado en la cara interna del muslo. Cero balanceo del torso.'
   },
 
-  // --- SOPORTE & COMPUESTOS ---
+  // --- SOPORTE & COMPUESTOS (100% COLCHONETA / CERO SILLAS) ---
   FLOOR_PRESS_MANCUERNAS: {
     id: 'floor_press_mancuernas',
     name: 'Floor Press en Colchoneta con Mancuernas de 6 kg',
     muscleTarget: 'Soporte Pectoral / Hombros',
     equipment: 'Mancuernas + Colchoneta',
-    sets: 4,
-    reps: '20 - 25 reps (Alta cadencia controlada)',
-    tempo: '3s Bajada hasta rozar colchoneta • 1s Pausa isométrica arriba',
-    restSeconds: 75,
-    rpe: 'RPE 8.5',
-    setupTime: 'Acuéstate sobre la colchoneta con rodillas dobladas y mancuernas en el pecho.',
-    technique: 'Empuja las mancuernas de 6 kg hacia arriba con los codos a 45° respecto al torso. Al descender en 3 segundos lentos, los tríceps tocan suavemente la colchoneta sin rebotar. Sube con potencia y contrae el pecho y tríceps 1 segundo.',
+    sets: 2,
+    reps: '10 - 12 reps (RIR 2)',
+    tempo: '2s Bajada hasta rozar colchoneta • 1s Empuje arriba',
+    restSeconds: 90,
+    rpe: 'RPE 7.5',
+    setupTime: 'Acuéstate en la colchoneta con rodillas dobladas y mancuernas a los lados del pecho.',
+    technique: 'Empuja las mancuernas hacia arriba con los codos a 45° respecto al cuerpo. Al bajar en 2 segundos, los tríceps rozan suavemente la colchoneta sin rebotar. Vuelve a subir con potencia.',
     biomechanicCues: [
-      'La colchoneta protege el hombro y aísla la fase concéntrica de tríceps y pectoral.',
-      'Cadencia lenta de 3s para convertir 6 kg en una bomba de bombeo e hipertrofia sarcoplásmica.'
+      'La colchoneta protege la cápsula del hombro y aísla tríceps y pecho.',
+      'Empuje seguro sin necesidad de bancos de gimnasio.'
     ],
     mistakesToAvoid: [
-      'Rebotar los codos violentamente contra el piso.',
-      'Abrir los codos a 90° con los hombros.'
+      'Rebotar los codos bruscamente contra el piso.',
+      'Abrir los codos a 90° alineados con el cuello.'
     ],
     animationFrames: [
       `${DB_IMG_BASE}Dumbbell_Floor_Press/0.jpg`,
@@ -240,120 +269,124 @@ export const EXERCISE_LIBRARY: Record<string, Exercise> = {
     ],
     videoEmbedUrl: 'uUGDRwge4F8',
     videoTitle: 'Dumbbell Floor Press en el Suelo',
-    visualCue: 'Codos en ángulo de 45° respecto al cuerpo. Descenso lento hasta que los tríceps tocan la colchoneta sin rebotar.'
+    visualCue: 'Codos a 45° respecto al cuerpo. Los tríceps tocan la colchoneta sin rebotar.'
   },
 
   FLEXIONES_DECLINADAS_SILLA: {
     id: 'flexiones_declinadas_silla',
-    name: 'Flexiones Declinadas con Pies en Silla',
+    name: 'Flexiones en Colchoneta sobre Rodillas (Cero Dolor de Muñeca)',
     muscleTarget: 'Soporte Pectoral / Hombros',
-    equipment: 'Silla + Colchoneta',
-    sets: 3,
-    reps: '15 - 20 reps',
-    tempo: '3s Descenso hacia el suelo • 1s Isometría abajo y arriba',
-    restSeconds: 75,
-    rpe: 'RPE 9',
-    setupTime: 'Pies en el asiento de la silla, manos en la colchoneta al ancho de hombros.',
-    technique: 'Cuerpo recto como una tabla. Desciende el pecho en 3 segundos lentos hacia la colchoneta. Pausa 1 segundo a 2 cm del suelo y empuja explosivo, apretando hombros y tríceps arriba.',
+    equipment: 'Colchoneta',
+    sets: 2,
+    reps: '8 - 10 reps (RIR 2)',
+    tempo: '2s Bajada controlada • 1s Empuje',
+    restSeconds: 90,
+    rpe: 'RPE 7.5',
+    setupTime: 'Apoya las rodillas sobre la colchoneta acolchada. Para cuidar las muñecas al 100%, puedes apoyar las manos sujetando los mangos de tus mancuernas en el piso (agarre neutro) o apoyar las palmas con dedos bien separados.',
+    technique: 'Cuerpo en línea recta desde las rodillas hasta los hombros. Desciende el pecho en 2 segundos hacia la colchoneta con los codos a 45°. Empuja con fuerza hasta estirar los brazos.',
     biomechanicCues: [
-      'Construye hombros y pecho superior que crean el marco estético para que los brazos luzcan el doble de grandes.'
+      'Apoyar las rodillas reduce la carga al 55% del peso corporal, permitiendo técnica estricta sin fatiga extrema.',
+      'Sujetar las mancuernas como base elimina la hiperextensión de muñeca.'
     ],
     mistakesToAvoid: [
-      'Dejar caer la cintura arqueando la zona lumbar.'
+      'Quebrar la cintura dejando caer la pelvis.',
+      'Llevar los codos demasiado abiertos hacia las orejas.'
     ],
     animationFrames: [
       `${DB_IMG_BASE}Decline_Push-Up/0.jpg`,
       `${DB_IMG_BASE}Decline_Push-Up/1.jpg`
     ],
     videoEmbedUrl: 'SKPab2YC8BE',
-    videoTitle: 'Flexiones Declinadas con Pies Elevados',
-    visualCue: 'Pies sobre la silla, cuerpo en línea recta sin quebrar la cadera. El pecho desciende a 2 cm de la colchoneta.'
+    videoTitle: 'Flexiones sobre Rodillas Controladas',
+    visualCue: 'Rodillas acolchadas en la colchoneta, espalda recta, codos a 45° bajando hacia el suelo.'
   },
 
   FLEXIONES_DIAMANTE_COLCHONETA: {
     id: 'flexiones_diamante_colchoneta',
-    name: 'Flexiones Diamante en Colchoneta (Tríceps Puro)',
+    name: 'Flexiones Cerradas sobre Rodillas en Colchoneta (Tríceps)',
     muscleTarget: 'Tríceps (60% del brazo)',
     equipment: 'Colchoneta',
-    sets: 3,
-    reps: '12 - 20 reps (RIR 1)',
-    tempo: '3s Bajada lenta • 1s Pausa en contracción de tríceps',
-    restSeconds: 75,
-    rpe: 'RPE 9.5',
-    setupTime: 'En la colchoneta, dedos índices y pulgares formando un diamante bajo el esternón.',
-    technique: 'Desciende en 3 segundos manteniendo los codos pegados a las costillas hasta que el pecho roce tus manos. Empuja con la fuerza de los tríceps y bloquea arriba 1 segundo. Si es necesario, apoya las rodillas para no comprometer el tempo de 3 segundos.',
+    sets: 2,
+    reps: '8 - 10 reps (RIR 2)',
+    tempo: '2s Bajada lenta • 1s Empuje firme',
+    restSeconds: 90,
+    rpe: 'RPE 8',
+    setupTime: 'Rodillas en la colchoneta. Manos apoyadas en la colchoneta debajo del centro del pecho.',
+    technique: 'Desciende en 2 segundos manteniendo los codos pegados a las costillas hasta que el pecho roce el suelo. Empuja extendiendo los codos con la fuerza de los tríceps. Si sientes tensión en las muñecas, puedes realizar el Press Cerrado con Mancuernas en su lugar.',
     biomechanicCues: [
-      'Máxima activación EMG de la cabeza lateral y medial del tríceps comprobada en estudios biomecánicos.'
+      'Codos pegados a los costados para dirigir el trabajo a los tríceps.',
+      'Rodillas en colchoneta para dosificar la intensidad de forma cómoda.'
     ],
     mistakesToAvoid: [
-      'Abrir los codos en exceso comprometiendo muñecas.'
+      'Forzar la flexión si notas molestia en las muñecas.'
     ],
     animationFrames: [
       `${DB_IMG_BASE}Push-Ups_-_Close_Triceps_Position/0.jpg`,
       `${DB_IMG_BASE}Push-Ups_-_Close_Triceps_Position/1.jpg`
     ],
     videoEmbedUrl: 'J0DnG1_S92I',
-    videoTitle: 'Flexiones Diamante para Tríceps',
-    visualCue: 'Pulgares e índices unidos bajo el centro del pecho. Codos pegados al cuerpo para transferir toda la carga al tríceps.'
+    videoTitle: 'Flexiones Cerradas para Tríceps',
+    visualCue: 'Manos centradas, codos rozando las costillas en el descenso y extensión completa.'
   },
 
   REMO_MANCUERNAS_UNILATERAL: {
     id: 'remo_mancuernas_unilateral',
-    name: 'Remo Unilateral en Silla con Mancuerna de 6 kg',
+    name: 'Remo Unilateral en Colchoneta en Posición de Zancada (6 kg - Sin Silla)',
     muscleTarget: 'Soporte Espalda / Tracción',
-    equipment: 'Mancuernas + Silla',
-    sets: 4,
-    reps: '18 - 25 reps por lado',
-    tempo: '3s Descenso controlado • 1.5s Isometría apretando dorsal y bíceps',
-    restSeconds: 60,
-    rpe: 'RPE 8.5',
-    setupTime: 'Rodilla y mano izquierda en la silla, pie derecho en el suelo, torso plano.',
-    technique: 'Sujeta la mancuerna de 6 kg. Tira desde el codo llevando la mancuerna hacia la cadera. Arriba haz una pausa isométrica estricta de 1.5 segundos contrayendo la espalda y el bíceps. Baja en 3 segundos lentos sintiendo el estiramiento completo.',
+    equipment: 'Mancuernas + Colchoneta',
+    sets: 2,
+    reps: '8 - 12 reps por lado (RIR 2)',
+    tempo: '2s Descenso • 1s Isometría arriba apretando dorsal',
+    restSeconds: 90,
+    rpe: 'RPE 7.5 - 8',
+    setupTime: 'Adelanta una pierna en posición de zancada sobre la colchoneta. Apoya el antebrazo de ese lado sobre el muslo delantero para dar apoyo estable a la espalda.',
+    technique: 'Con la mancuerna de 6 kg en la otra mano, tira hacia arriba y atrás dirigiendo el codo hacia la cadera. Aprieta la espalda y el brazo 1 segundo arriba y desciende en 2 segundos controlados.',
     biomechanicCues: [
-      'La fuerza de tirón dorsal estabiliza la articulación del codo para los curls pesados de alta repetición.'
+      'Posición de zancada con antebrazo en muslo: máxima estabilidad sin requerir ninguna silla o banco.',
+      'Tirón enfocado desde el codo hacia la cadera.'
     ],
     mistakesToAvoid: [
-      'Rotar el torso o impulsarse con el cuello.'
+      'Girar el pecho o balancear el cuerpo para elevar el peso.'
     ],
     animationFrames: [
       `${DB_IMG_BASE}One-Arm_Dumbbell_Row/0.jpg`,
       `${DB_IMG_BASE}One-Arm_Dumbbell_Row/1.jpg`
     ],
     videoEmbedUrl: 'roCP6wCXPqo',
-    videoTitle: 'Remo Unilateral con Mancuerna Apoyado en Banco/Silla',
-    visualCue: 'Tirón desde el codo hacia la cadera en trayectoria diagonal, sintiendo la contracción dorsal y flexión del brazo.'
+    videoTitle: 'Remo con Mancuerna en Posición de Zancada',
+    visualCue: 'Torso inclinado 45°, antebrazo apoyado en el muslo. El codo viaja hacia la cadera.'
   }
 };
 
-// Rutina semanal estructurada para 60 días
+// Rutina semanal estructurada para 60 días (Calibrada a 2 series de trabajo y 100% en colchoneta)
 export const WEEKLY_ROUTINE_TEMPLATE: DayRoutine[] = [
   {
     dayOfWeek: 1,
     title: 'Día 1: Hipertrofia de Brazos (6 kg) - Tríceps (60%) & Bíceps',
-    tagline: '15-25 reps • Tempo 3-1-1-0 • Tensión Mecánica Continua',
+    tagline: '2 series • 8-12 reps (RIR 2) • 90s descanso • Cero dolor de muñeca',
     isRestDay: false,
-    focusMuscles: ['Tríceps Cabeza Larga & Lateral', 'Bíceps Supinador', 'Braquial'],
-    estimatedMinutes: 45,
+    focusMuscles: ['Tríceps (Floor Press Cerrado)', 'Bíceps Supinador', 'Braquial'],
+    estimatedMinutes: 30,
     exercises: [
-      EXERCISE_LIBRARY.PRESS_FRANCES_COLCHONETA,
+      EXERCISE_LIBRARY.PRESS_CERRADO_TRICEPS_COLCHONETA,
       EXERCISE_LIBRARY.CURL_SUPINO_MANCUERNAS,
-      EXERCISE_LIBRARY.FONDOS_SILLA,
+      EXERCISE_LIBRARY.PRESS_FRANCES_COLCHONETA,
       EXERCISE_LIBRARY.CURL_MARTILLO,
       EXERCISE_LIBRARY.PATADA_TRICEPS
     ]
   },
   {
     dayOfWeek: 2,
-    title: 'Día 2: Empuje & Base Pectoral/Hombros + Tríceps Bloqueo',
-    tagline: '15-25 reps • Tempo 3s excéntrico • Estabilidad articular',
+    title: 'Día 2: Empuje Pectoral & Tríceps en Colchoneta (6 kg)',
+    tagline: '2 series • 8-12 reps • 100% Suelo / Sin Sillas ni Bancos',
     isRestDay: false,
-    focusMuscles: ['Pectoral', 'Deltoides Anterior', 'Tríceps'],
-    estimatedMinutes: 40,
+    focusMuscles: ['Pectoral (Floor Press)', 'Tríceps Cabeza Larga', 'Deltoides'],
+    estimatedMinutes: 25,
     exercises: [
       EXERCISE_LIBRARY.FLOOR_PRESS_MANCUERNAS,
+      EXERCISE_LIBRARY.PRESS_CERRADO_TRICEPS_COLCHONETA,
       EXERCISE_LIBRARY.COPA_DOS_MANOS,
-      EXERCISE_LIBRARY.FLEXIONES_DECLINADAS_SILLA,
-      EXERCISE_LIBRARY.FLEXIONES_DIAMANTE_COLCHONETA
+      EXERCISE_LIBRARY.FLEXIONES_DECLINADAS_SILLA
     ]
   },
   {
@@ -363,19 +396,19 @@ export const WEEKLY_ROUTINE_TEMPLATE: DayRoutine[] = [
     isRestDay: true,
     focusMuscles: ['Recuperación SNC', 'Síntesis Proteica Miofibrilar'],
     estimatedMinutes: 0,
-    recoveryNote: 'Los brazos crecen durante el reposo cuando hay balance positivo de nitrógeno. Con mancuernas de 6 kg y series de 15-25 reps al fallo técnico, el microtrauma es alto. Hoy tu trabajo es alcanzar las 2.650 kcal y tus 140-150g de proteína sin realizar cardio extenuante.',
+    recoveryNote: 'Los brazos crecen durante el reposo cuando hay balance positivo de nitrógeno. Con mancuernas de 6 kg y series controladas de 8-12 reps, el estímulo es perfecto. Hoy tu trabajo es alcanzar las 2.650 kcal y tus 140-150g de proteína sin realizar cardio extenuante.',
     exercises: []
   },
   {
     dayOfWeek: 4,
     title: 'Día 4: Densidad de Brazos & Grosor del Braquial (6 kg)',
-    tagline: '15-25 reps • Isometría pico de 1s • Bombeo vascular',
+    tagline: '2 series • 8-12 reps • Aislamiento en colchoneta',
     isRestDay: false,
-    focusMuscles: ['Braquial', 'Braquiorradial', 'Pico de Bíceps', 'Tríceps Cabeza Larga'],
-    estimatedMinutes: 45,
+    focusMuscles: ['Braquial', 'Braquiorradial', 'Pico de Bíceps', 'Tríceps'],
+    estimatedMinutes: 30,
     exercises: [
       EXERCISE_LIBRARY.CURL_MARTILLO,
-      EXERCISE_LIBRARY.FONDOS_SILLA,
+      EXERCISE_LIBRARY.PRESS_CERRADO_TRICEPS_COLCHONETA,
       EXERCISE_LIBRARY.CURL_CONCENTRADO_SILLA,
       EXERCISE_LIBRARY.COPA_DOS_MANOS,
       EXERCISE_LIBRARY.PRESS_FRANCES_COLCHONETA
@@ -383,16 +416,16 @@ export const WEEKLY_ROUTINE_TEMPLATE: DayRoutine[] = [
   },
   {
     dayOfWeek: 5,
-    title: 'Día 5: Tracción Espalda & Bíceps Bombeo Extremo',
-    tagline: '15-25 reps • Tempo estricto 3s bajada • Agotamiento neuromuscular',
+    title: 'Día 5: Tracción en Colchoneta & Bíceps Bombeo Estricto',
+    tagline: '2 series • 8-12 reps • Conexión mente-músculo sin sobrecarga',
     isRestDay: false,
-    focusMuscles: ['Espalda Dorsal', 'Bíceps', 'Flexiones Diamante'],
-    estimatedMinutes: 45,
+    focusMuscles: ['Espalda Dorsal (Zancada)', 'Bíceps Supinación', 'Tríceps'],
+    estimatedMinutes: 30,
     exercises: [
       EXERCISE_LIBRARY.REMO_MANCUERNAS_UNILATERAL,
       EXERCISE_LIBRARY.CURL_SUPINO_MANCUERNAS,
-      EXERCISE_LIBRARY.FLEXIONES_DIAMANTE_COLCHONETA,
-      EXERCISE_LIBRARY.CURL_CONCENTRADO_SILLA
+      EXERCISE_LIBRARY.PRESS_CERRADO_TRICEPS_COLCHONETA,
+      EXERCISE_LIBRARY.CURL_MARTILLO
     ]
   },
   {
@@ -422,9 +455,9 @@ export function getRoutineForCycleDay(dayNumber: number): DayRoutine {
   const baseRoutine = WEEKLY_ROUTINE_TEMPLATE[dayIndex];
   
   const week = Math.ceil(dayNumber / 7);
-  let phaseTag = `Fase 1 (Semanas 1-2): Dominio del Tempo 3s Excéntrica`;
-  if (week >= 3 && week <= 4) phaseTag = `Fase 2 (Semanas 3-4): Densidad & Pausas Isométricas de 1.5s`;
-  if (week >= 5 && week <= 6) phaseTag = `Fase 3 (Semanas 5-6): Fallo Técnico (20-25 reps a 6 kg)`;
+  let phaseTag = `Fase 1 (Semanas 1-2): Adaptación Anatómica (2 series • 8-12 reps RIR 2 • Cero Dolor de Muñeca)`;
+  if (week >= 3 && week <= 4) phaseTag = `Fase 2 (Semanas 3-4): Consolidación & Pausa Isométrica de 1s`;
+  if (week >= 5 && week <= 6) phaseTag = `Fase 3 (Semanas 5-6): Progresión a 12-15 reps con 6 kg`;
   if (week >= 7) phaseTag = `Fase 4 (Semanas 7-8): Supercompensación & Máximo Volumen`;
 
   return {

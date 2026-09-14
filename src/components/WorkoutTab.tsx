@@ -262,31 +262,50 @@ export const WorkoutTab: React.FC<WorkoutTabProps> = ({
       {/* Exercises List (Only on training days) */}
       {!routine.isRestDay && (
         <div className="space-y-4">
-          {/* 6kg Biomechanics & Tempo Rule Banner */}
-          <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/15 via-dark-900 to-cyan-500/10 border border-amber-500/30 flex items-start gap-3 shadow-lg">
-            <Clock className="w-5 h-5 text-amber-400 shrink-0 mt-0.5 animate-pulse" />
+          {/* 6kg Biomechanics & Adaptive Progression Banner */}
+          <div className={`p-4 rounded-2xl border flex items-start gap-3 shadow-lg ${
+            isMiranda
+              ? 'bg-gradient-to-r from-emerald-500/15 via-dark-900 to-teal-500/10 border-emerald-500/30'
+              : 'bg-gradient-to-r from-amber-500/15 via-dark-900 to-emerald-500/10 border-amber-500/30'
+          }`}>
+            <ShieldCheck className={`w-5 h-5 shrink-0 mt-0.5 animate-pulse ${
+              isMiranda ? 'text-emerald-400' : 'text-amber-400'
+            }`} />
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-1">
-                <span className="text-xs font-black text-amber-300 uppercase tracking-wide">
-                  Regla de Sobrecarga con Mancuernas de 6 kg:
+                <span className={`text-xs font-black uppercase tracking-wide ${
+                  isMiranda ? 'text-emerald-300' : 'text-amber-300'
+                }`}>
+                  {isMiranda ? 'Protocolo Miranda: Firmeza & Bajo Impacto' : 'Calibración Adaptativa: 2 Series • RIR 2 • Cero Dolor de Muñeca'}
                 </span>
-                <span className="text-[10px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-bold border border-cyan-500/30">
-                  Tempo Obligatorio 3-1-1-0
+                <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
+                  {isMiranda ? '12 - 15 Reps' : '8 - 12 Reps • 90s Descanso'}
                 </span>
+                {!isMiranda && (
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-bold border border-cyan-500/30">
+                    100% en Colchoneta (Sin Sillas)
+                  </span>
+                )}
               </div>
               <p className="text-xs text-slate-200 leading-relaxed">
-                Con mancuernas de 6 kg, la hipertrofia máxima se consigue mediante <strong>Tiempo Bajo Tensión (TUT)</strong> y fallo técnico: mantén <strong className="text-amber-300">3 segundos estrictos de fase excéntrica (bajada)</strong> y <strong className="text-cyan-300">1 segundo de pausa isométrica en contracción pico</strong>, en un rango estricto de <strong className="text-white">15 a 25 repeticiones</strong>.
+                {isMiranda ? (
+                  <>Control articular estricto y respiración diafragmática continua sin saltos ni impacto en meniscos.</>
+                ) : (
+                  <>
+                    Para evitar el agotamiento prematuro en la serie 2, tu rutina está calibrada a <strong className="text-amber-300">2 series efectivas de trabajo</strong> dejando <strong className="text-emerald-300">2 repeticiones en recámara (RIR 2)</strong> sin llegar al fallo extenuante. Hemos eliminado los fondos en silla: ahora todo se realiza en la <strong className="text-cyan-300">colchoneta con agarre neutro</strong> (cero compresión en muñecas) y descansos completos de <strong>90 segundos</strong>.
+                  </>
+                )}
               </p>
             </div>
           </div>
 
           <div className="flex items-center justify-between">
             <h3 className="font-heading font-bold text-lg text-white flex items-center gap-2">
-              <Dumbbell className="w-5 h-5 text-amber-400" />
+              <Dumbbell className={`w-5 h-5 ${isMiranda ? 'text-emerald-400' : 'text-amber-400'}`} />
               Ejercicios Guiados ({routine.exercises.length})
             </h3>
             <span className="text-xs text-slate-400 font-medium">
-              15 - 25 Reps • RIR 1-2
+              {isMiranda ? '12 - 15 Reps • Control Articular' : '2 Series de Trabajo • 8 - 12 Reps (RIR 2)'}
             </span>
           </div>
 
