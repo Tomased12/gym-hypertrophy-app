@@ -97,6 +97,28 @@ export interface BodyMeasurement {
   notes?: string;
 }
 
+export interface BioReadinessCheck {
+  dateStr: string;
+  sleepHours: number; // Horas de sueño
+  bedTimeHour: number; // Hora en que se acostó (ej: 5 para las 5 AM, 23 para las 11 PM)
+  wakeTimeHour: number; // Hora en que se levantó (ej: 14 para las 14:00)
+  mealsCountToday: number; // Comidas realizadas antes de entrenar
+  hadSugarCrashRisk: boolean; // ¿Consumió galletitas/golosinas/azúcar simple solo con estómago vacío?
+  cigarettesToday: number; // Cantidad aproximada de cigarrillos
+  waterLitersToday: number; // Litros de agua pura ingeridos
+  currentFeeling: 1 | 2 | 3 | 4 | 5; // 1: Muy débil/temblores, 3: Normal, 5: Máxima energía
+  hasTremorsOrDizziness: boolean; // ¿Siente temblores musculares o mareo?
+  
+  // Resultados generados por el algoritmo fisiológico
+  readinessScore: number; // 0 - 100%
+  status: 'optimo' | 'moderado' | 'critico';
+  coachTitle: string;
+  coachMessage: string;
+  recommendedAction: 'entrenar_normal' | 'entrenar_reducido' | 'descarga_movilidad' | 'descanso_obligatorio';
+  adaptedSets: number; // 2, 1, o 0
+  adaptedRestSeconds: number; // 90s, 120s
+}
+
 export interface DailyLog {
   dateStr: string; // YYYY-MM-DD
   dayNumber: number; // 1 to 60
@@ -112,6 +134,7 @@ export interface DailyLog {
   cardioLogs: CardioLog[];
   waterLiters: number;
   stepsCount?: number; // Pasos diarios (clave para Miranda)
+  readinessCheck?: BioReadinessCheck; // Chequeo pre-entreno de fatiga, sueño, alimentación y nicotina
   notes?: string;
 }
 

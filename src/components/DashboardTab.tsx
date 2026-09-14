@@ -12,7 +12,8 @@ import {
   Heart,
   Scale,
   Footprints,
-  Sparkles
+  Sparkles,
+  BatteryCharging
 } from 'lucide-react';
 import type { UserProfile, DailyLog, BodyMeasurement, UserId } from '../types';
 import { getRoutineForUser } from '../lib/workoutPlan';
@@ -233,6 +234,76 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Bio-Readiness Quick Card for Tomás / General */}
+      {profile.id === 'tomas' && (
+        <div 
+          onClick={() => onNavigateTab('workout')}
+          className={`glass-card rounded-2xl p-4 sm:p-5 border cursor-pointer transition-all hover:scale-[1.01] ${
+            todayLog.readinessCheck?.status === 'critico'
+              ? 'bg-gradient-to-r from-red-950/50 via-dark-900 to-red-900/20 border-red-500/40 shadow-lg shadow-red-500/10'
+              : todayLog.readinessCheck?.status === 'moderado'
+                ? 'bg-gradient-to-r from-amber-950/40 via-dark-900 to-amber-900/20 border-amber-500/40 shadow-lg shadow-amber-500/10'
+                : todayLog.readinessCheck?.status === 'optimo'
+                  ? 'bg-gradient-to-r from-emerald-950/40 via-dark-900 to-teal-900/20 border-emerald-500/40 shadow-lg shadow-emerald-500/10'
+                  : 'border-white/10 hover:border-amber-500/30'
+          }`}
+        >
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 font-bold ${
+                todayLog.readinessCheck?.status === 'critico'
+                  ? 'bg-red-500 text-white animate-pulse shadow-md shadow-red-500/30'
+                  : todayLog.readinessCheck?.status === 'moderado'
+                    ? 'bg-amber-500 text-black shadow-md shadow-amber-500/30'
+                    : todayLog.readinessCheck?.status === 'optimo'
+                      ? 'bg-emerald-500 text-black shadow-md shadow-emerald-500/30'
+                      : 'bg-dark-800 text-amber-400 border border-white/10'
+              }`}>
+                <BatteryCharging className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] font-black uppercase tracking-wider text-slate-400">
+                    Batería Biológica Pre-Entreno
+                  </span>
+                  {todayLog.readinessCheck ? (
+                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${
+                      todayLog.readinessCheck.status === 'critico'
+                        ? 'bg-red-500/20 text-red-300 border-red-500/40'
+                        : todayLog.readinessCheck.status === 'moderado'
+                          ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                          : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+                    }`}>
+                      {todayLog.readinessCheck.readinessScore}% Capacidad
+                    </span>
+                  ) : (
+                    <span className="text-[10px] px-2 py-0.5 rounded-full font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                      Pendiente
+                    </span>
+                  )}
+                </div>
+                <h4 className="text-sm font-bold text-white mt-0.5">
+                  {todayLog.readinessCheck ? todayLog.readinessCheck.coachTitle : 'Evalúa tu combustible biológico antes de entrenar'}
+                </h4>
+                <p className="text-xs text-slate-300 line-clamp-1 mt-0.5">
+                  {todayLog.readinessCheck 
+                    ? todayLog.readinessCheck.coachMessage 
+                    : 'Calcula el impacto de tu sueño, nicotina y azúcar para adaptar las series de hoy.'}
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="hidden sm:flex items-center gap-1 text-xs font-bold text-amber-400 hover:text-amber-300 shrink-0 bg-dark-800/80 px-3 py-1.5 rounded-lg border border-white/10"
+            >
+              <span>{todayLog.readinessCheck ? 'Ver Rutina Adaptada' : 'Evaluar Ahora'}</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Daily Quick Check-in & Habit Confirmation */}
       <div className="glass-card rounded-2xl p-5 sm:p-6 border border-white/10">

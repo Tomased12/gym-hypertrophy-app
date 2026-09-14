@@ -284,6 +284,9 @@ export function App() {
             onToggleWorkoutCompleted={(completed) => handleUpdateTodayLog({ workoutCompleted: completed })}
             onToggleStretchingCompleted={(completed) => handleUpdateTodayLog({ stretchingCompleted: completed })}
             onStartRestTimer={handleStartRestTimer}
+            readinessCheck={todayLog.readinessCheck}
+            onSaveReadiness={(check) => handleUpdateTodayLog({ readinessCheck: check })}
+            dateStr={todayStr}
           />
         )}
 

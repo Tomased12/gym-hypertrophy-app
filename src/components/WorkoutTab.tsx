@@ -6,22 +6,25 @@ import {
   Info, 
   Play, 
   ChevronRight, 
-  ChevronLeft,
+  ChevronLeft, 
   Flame, 
   Clock, 
   ShieldCheck, 
-  Coffee,
-  Sparkles,
-  Video,
-  Heart,
-  HeartHandshake
+  Coffee, 
+  Sparkles, 
+  Video, 
+  Heart, 
+  HeartHandshake,
+  BatteryCharging,
+  AlertTriangle
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import type { DayRoutine, UserId } from '../types';
+import type { DayRoutine, UserId, BioReadinessCheck } from '../types';
 import { getRoutineForUser } from '../lib/workoutPlan';
 import { playBeep } from '../lib/sound';
 import { ExerciseVisualViewer } from './ExerciseVisualViewer';
 import { GuidedStretchingWidget } from './GuidedStretchingWidget';
+import { BioReadinessModal } from './BioReadinessModal';
 
 interface WorkoutTabProps {
   userId?: UserId;
@@ -31,6 +34,9 @@ interface WorkoutTabProps {
   onToggleWorkoutCompleted: (completed: boolean) => void;
   onToggleStretchingCompleted?: (completed: boolean) => void;
   onStartRestTimer: (seconds: number, exerciseName: string) => void;
+  readinessCheck?: BioReadinessCheck;
+  onSaveReadiness?: (check: BioReadinessCheck) => void;
+  dateStr?: string;
 }
 
 export const WorkoutTab: React.FC<WorkoutTabProps> = ({
@@ -40,12 +46,16 @@ export const WorkoutTab: React.FC<WorkoutTabProps> = ({
   isStretchingCompletedToday = false,
   onToggleWorkoutCompleted,
   onToggleStretchingCompleted,
-  onStartRestTimer
+  onStartRestTimer,
+  readinessCheck,
+  onSaveReadiness,
+  dateStr = new Date().toISOString().split('T')[0]
 }) => {
   const [selectedDay, setSelectedDay] = useState<number>(currentCycleDay);
   const [completedSets, setCompletedSets] = useState<Record<string, boolean[]>>({});
   const [expandedExerciseId, setExpandedExerciseId] = useState<string | null>(null);
   const [highlightCooldown, setHighlightCooldown] = useState(false);
+  const [isReadinessModalOpen, setIsReadinessModalOpen] = useState<boolean>(false);
 
   const isMiranda = userId === 'miranda';
   const routine: DayRoutine = getRoutineForUser(userId, selectedDay);
@@ -262,6 +272,98 @@ export const WorkoutTab: React.FC<WorkoutTabProps> = ({
       {/* Exercises List (Only on training days) */}
       {!routine.isRestDay && (
         <div className="space-y-4">
+          {/* Bio-Readiness Auto-Calibration Card */}
+          <div className={`p-4 sm:p-5 rounded-3xl border transition-all ${
+            readinessCheck?.status === 'critico'
+              ? 'bg-gradient-to-r from-red-950/60 via-dark-900 to-red-900/20 border-red-500/50 shadow-xl shadow-red-500/10'
+              : readinessCheck?.status === 'moderado'
+                ? 'bg-gradient-to-r from-amber-950/40 via-dark-900 to-amber-900/20 border-amber-500/40 shadow-xl shadow-amber-500/10'
+                : readinessCheck?.status === 'optimo'
+                  ? 'bg-gradient-to-r from-emerald-950/40 via-dark-900 to-teal-900/20 border-emerald-500/40 shadow-xl shadow-emerald-500/10'
+                  : 'bg-dark-900/90 border-white/10 shadow-lg'
+          }`}>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-start gap-3">
+                <div className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 font-black shadow-lg ${
+                  readinessCheck?.status === 'critico'
+                    ? 'bg-red-500 text-white shadow-red-500/30 animate-pulse'
+                    : readinessCheck?.status === 'moderado'
+                      ? 'bg-amber-500 text-black shadow-amber-500/30'
+                      : readinessCheck?.status === 'optimo'
+                        ? 'bg-emerald-500 text-black shadow-emerald-500/30'
+                        : 'bg-dark-800 text-amber-400 border border-white/10'
+                }`}>
+                  <BatteryCharging className="w-6 h-6" />
+                </div>
+
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-black uppercase tracking-wider text-slate-300">
+                      Batería Biológica & Preparación Pre-Entreno
+                    </span>
+                    {readinessCheck && (
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-extrabold border ${
+                        readinessCheck.status === 'critico'
+                          ? 'bg-red-500/20 text-red-300 border-red-500/40'
+                          : readinessCheck.status === 'moderado'
+                            ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                            : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+                      }`}>
+                        {readinessCheck.readinessScore}% Capacidad
+                      </span>
+                    )}
+                  </div>
+
+                  <h4 className="font-heading font-black text-base text-white mt-0.5">
+                    {readinessCheck ? readinessCheck.coachTitle : '¿Cómo está tu cuerpo hoy? (Sueño, Glucosa y Nicotina)'}
+                  </h4>
+
+                  <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                    {readinessCheck 
+                      ? readinessCheck.coachMessage
+                      : 'Comprobá en 20 segundos tu nivel de energía real antes de tocar las mancuernas para prevenir mareos, debilidad y temblores.'
+                    }
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+                <button
+                  type="button"
+                  onClick={() => setIsReadinessModalOpen(true)}
+                  className="py-2.5 px-4 rounded-xl font-bold text-xs bg-dark-800 hover:bg-dark-700 text-amber-300 border border-amber-500/30 transition-all hover:scale-105 shadow-md flex items-center gap-1.5"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>{readinessCheck ? 'Re-evaluar Batería' : 'Chequear Batería Pre-Entreno'}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Protocolo de Rescate en Estado Crítico */}
+            {readinessCheck?.status === 'critico' && (
+              <div className="mt-3 pt-3 border-t border-red-500/20 flex flex-wrap items-center justify-between gap-2">
+                <span className="text-xs text-red-300 font-semibold flex items-center gap-1.5">
+                  <AlertTriangle className="w-4 h-4 text-red-400" />
+                  {readinessCheck.recommendedAction === 'descanso_obligatorio' 
+                    ? 'El Coach recomienda descanso estratégico hoy para evitar colapso neuromuscular.'
+                    : 'Rutina adaptada a 1 serie suave en colchoneta.'}
+                </span>
+
+                <div className="flex items-center gap-2">
+                  {readinessCheck.recommendedAction === 'descanso_obligatorio' && !isWorkoutCompletedToday && (
+                    <button
+                      type="button"
+                      onClick={() => onToggleWorkoutCompleted(true)}
+                      className="py-1.5 px-3 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold text-xs transition-all shadow-md"
+                    >
+                      Activar Descanso de Rescate (Proteger Racha)
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* 6kg Biomechanics & Adaptive Progression Banner */}
           <div className={`p-4 rounded-2xl border flex items-start gap-3 shadow-lg ${
             isMiranda
@@ -312,8 +414,12 @@ export const WorkoutTab: React.FC<WorkoutTabProps> = ({
           <div className="grid grid-cols-1 gap-4">
             {routine.exercises.map((exercise, index) => {
               const isExpanded = expandedExerciseId === exercise.id;
-              const setsState = completedSets[exercise.id] || new Array(exercise.sets).fill(false);
-              const allSetsDone = setsState.filter(Boolean).length === exercise.sets;
+              const effectiveSets = readinessCheck?.status === 'critico' && readinessCheck.adaptedSets <= 1
+                ? 1
+                : exercise.sets;
+              const restTime = readinessCheck?.adaptedRestSeconds || exercise.restSeconds;
+              const setsState = completedSets[exercise.id] || new Array(effectiveSets).fill(false);
+              const allSetsDone = setsState.slice(0, effectiveSets).filter(Boolean).length === effectiveSets;
 
               return (
                 <div
@@ -342,7 +448,7 @@ export const WorkoutTab: React.FC<WorkoutTabProps> = ({
                           </span>
                         </div>
                         <p className="text-xs text-slate-400 mt-1">
-                          <span className="text-amber-400 font-semibold">{exercise.sets} Series</span> × <span className="text-white font-semibold">{exercise.reps}</span> • Descanso: <span className="text-amber-400 font-semibold">{exercise.restSeconds}s</span> • {exercise.rpe}
+                          <span className="text-amber-400 font-semibold">{effectiveSets} Series</span> × <span className="text-white font-semibold">{exercise.reps}</span> • Descanso: <span className="text-amber-400 font-semibold">{restTime}s</span> • {exercise.rpe}
                         </p>
 
                         {/* Tempo Tag */}
@@ -356,12 +462,12 @@ export const WorkoutTab: React.FC<WorkoutTabProps> = ({
                     {/* Quick Rest Timer Trigger Button */}
                     <div className="flex items-center gap-2 self-end sm:self-center">
                       <button
-                        onClick={() => onStartRestTimer(exercise.restSeconds, exercise.name)}
+                        onClick={() => onStartRestTimer(restTime, exercise.name)}
                         className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-800 hover:bg-dark-700 text-xs text-amber-400 border border-amber-500/20 font-semibold transition-colors"
                         title="Iniciar cronómetro de descanso"
                       >
                         <Clock className="w-3.5 h-3.5" />
-                        <span>{exercise.restSeconds}s</span>
+                        <span>{restTime}s</span>
                       </button>
 
                       <button
@@ -383,12 +489,12 @@ export const WorkoutTab: React.FC<WorkoutTabProps> = ({
                     <span className="text-xs font-semibold text-slate-400 mr-1">
                       Series:
                     </span>
-                    {Array.from({ length: exercise.sets }).map((_, sIdx) => {
+                    {Array.from({ length: effectiveSets }).map((_, sIdx) => {
                       const isChecked = setsState[sIdx] || false;
                       return (
                         <button
                           key={sIdx}
-                          onClick={() => handleToggleSet(exercise.id, sIdx, exercise.sets, exercise.restSeconds, exercise.name)}
+                          onClick={() => handleToggleSet(exercise.id, sIdx, effectiveSets, restTime, exercise.name)}
                           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
                             isChecked
                               ? 'bg-emerald-500 text-black border-emerald-400 font-bold shadow-sm shadow-emerald-500/30'
@@ -471,6 +577,17 @@ export const WorkoutTab: React.FC<WorkoutTabProps> = ({
             highlightCard={highlightCooldown}
           />
         </div>
+      )}
+
+      {/* Bio-Readiness Assessment Modal */}
+      {onSaveReadiness && (
+        <BioReadinessModal
+          isOpen={isReadinessModalOpen}
+          onClose={() => setIsReadinessModalOpen(false)}
+          dateStr={dateStr}
+          initialCheck={readinessCheck}
+          onSaveReadiness={onSaveReadiness}
+        />
       )}
     </div>
   );
