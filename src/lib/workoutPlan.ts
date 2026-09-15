@@ -168,10 +168,12 @@ export const EXERCISE_LIBRARY: Record<string, Exercise> = {
     setupTime: 'De pie o sentado en la colchoneta con espalda recta y hombros relajados.',
     technique: 'Sujeta las mancuernas de 6 kg. Flexiona los codos girando la muñeca hacia afuera (supinación total). Aprieta el bíceps 1 segundo arriba y baja en 2 segundos controlados sintiendo cómo el músculo frena el descenso.',
     biomechanicCues: [
+      'PROTECCIÓN DEL CODO: No bloquees ni hiperextiendas el codo al bajar. Detén el descenso dejando unos 15° de flexión en el codo para retener la tensión en el músculo y descargar el tendón distal.',
       '2 segundos de bajada controlada: estimula la síntesis de proteína sin agotar el glucógeno.',
       'Codos pegados a los costados sin balancear la espalda.'
     ],
     mistakesToAvoid: [
+      'Hiperextender o dejar caer el peso al 100% estirando bruscamente el codo (inflama el tendón del pliegue anterior).',
       'Balancear el torso para tomar impulso con la zona lumbar.',
       'Apurar las repeticiones perdiendo el control del descenso.'
     ],
@@ -195,10 +197,11 @@ export const EXERCISE_LIBRARY: Record<string, Exercise> = {
     restSeconds: 90,
     rpe: 'RPE 7.5 - 8 (Ensancha el brazo visto de frente)',
     setupTime: 'De pie o sentado en la colchoneta con espalda recta.',
-    technique: 'Agarre neutro estricto (palmas mirándose). Sube las mancuernas de 6 kg con los pulgares apuntando hacia arriba. Aprieta el músculo braquial 1 segundo arriba y desciende en 2 segundos controlados.',
+    technique: 'Agarre neutro estricto (palmas mirándose). Sube las mancuernas de 6 kg con los pulgares apuntando hacia arriba. Aprieta el músculo braquial 1 segundo arriba y desciende en 2 segundos controlados sin trabar codos abajo.',
     biomechanicCues: [
       'El músculo braquial empuja al bíceps hacia afuera al crecer, dando mayor grosor al brazo.',
-      'Agarre neutro: el más seguro y cómodo para las muñecas.'
+      'Agarre neutro: el más seguro y amigable para las muñecas y los tendones del codo.',
+      'Conserva una micro-flexión protectora en el punto bajo del movimiento.'
     ],
     mistakesToAvoid: [
       'Girar las muñecas hacia los lados.',
@@ -224,12 +227,13 @@ export const EXERCISE_LIBRARY: Record<string, Exercise> = {
     restSeconds: 90,
     rpe: 'RPE 8 (Aislamiento puro sin trampas)',
     setupTime: 'Siéntate en la colchoneta con piernas abiertas en V. Apoya el codo contra la cara interna del muslo.',
-    technique: 'El brazo cuelga extendido con la mancuerna de 6 kg. Flexiona el codo levantando el peso hacia el hombro sin mover el torso. En la cima aprieta el bíceps 1 segundo y baja en 2 segundos lentos.',
+    technique: 'El brazo desciende con la mancuerna de 6 kg manteniendo una leve flexión protectora. Flexiona el codo levantando el peso hacia el hombro sin mover el torso. En la cima aprieta el bíceps 1 segundo y baja en 2 segundos lentos frenando antes del bloqueo articular.',
     biomechanicCues: [
       'El muslo bloquea el codo impidiendo balanceos y asegurando aislamiento del bíceps.',
-      'Estira el brazo casi por completo abajo antes de la siguiente repetición.'
+      'CERO BLOQUEO ARTICULAR: Frena el descenso a unos 150-160° (deja una leve flexión). NUNCA dejes colgar el peso con el codo trabado al 100% para proteger el tendón distal del bíceps.'
     ],
     mistakesToAvoid: [
+      'Dejar caer el brazo hasta la extensión absoluta bloqueando el codo con peso.',
       'Despegar el codo del muslo al subir.',
       'Tirar del cuello o girar el pecho.'
     ],
